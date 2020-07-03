@@ -1,0 +1,108 @@
+// Header settings
+.header{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-image: linear-gradient(315deg, #000000 0%, #414141 50%, #000000 100%);
+  background-color: #000000;
+}
+.nav-header{
+  text-transform: uppercase;
+  z-index: 999999;
+  width: 60%;
+  display: flex;
+  height: 80px;
+  color: white;
+  align-items: center;
+  user-select: none;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  padding: 0;
+}
+
+.nav-header nav{
+  width: 100%;
+}
+// For big display
+.nav-header ul {
+  display: flex;
+  white-space: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+.nav-header ul:only-child {
+  flex-grow: 1;
+}
+
+.nav-header ul li{
+  list-style: none;
+  font-size: 1.5em;
+  padding: calc(40px - 0.75em) 10px;
+  vertical-align: center;
+  height: 100%;
+}
+
+// Hover text
+.header-text:hover{
+  color: #22D88F!important;
+  cursor: pointer;
+}
+
+// Small displays
+.burger-menu-btn{
+  font-size: 40px;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+}
+
+// Logo
+.logo{
+  font-size: 2rem;
+}
+.logo-container{
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+// Context menu on small display
+.burger-menu ul{
+  width: 50%;
+  position: absolute;
+  z-index:99999999;
+  background-color: black;
+  top: 80px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+.burger-menu ul li{
+  text-align: center;
+  height: 4rem;
+  width: 100%;
+  padding: calc(2rem - 10px) 0;
+  border-top: 1px #ffffff solid;
+}
+
+
+// Media
+@media (max-width: 499px) {
+  .just-on-big-display{
+    display: none;
+  }
+
+  .nav-header{
+    justify-content: left;
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 500px) {
+  .just-on-small-display{
+    background-color: red;
+    display: none;
+  }
+}

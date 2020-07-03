@@ -1,0 +1,41 @@
+.container{
+  width: 19%;
+  // border: 1px #000000 solid;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition-duration: 0.5s;
+  filter: grayscale(100%);
+  justify-content: space-between;
+}
+
+.img{
+  width: 100%;
+}
+
+.container:hover{
+  filter: grayscale(0);
+}
+
+.title{
+  opacity: 0;
+  transition-duration: 0.5s;
+}
+
+.container:hover .title{
+  opacity: 100%;
+}
+
+@media (max-width: 1000px) and (min-width: 480px){
+  .container{
+    width: 24%;
+  }
+}
+
+@media (max-width: 480px){
+  .container{
+    width: 32%;
+  }
+}
