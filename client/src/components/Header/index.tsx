@@ -7,7 +7,7 @@ import "./styleHeader.scss";
 const Header: React.FC = () => {
     const [showContextMenu, setShowContextMenu] = useState(false)
     return (
-        <header className="header">
+        <header className="header no-footer">
             <nav className="nav-header">
                 <div className=" burger-menu">
                     <div className="burger-menu just-on-small-display">
@@ -23,8 +23,8 @@ const Header: React.FC = () => {
                             showContextMenu ?
                                 (
                                     <ul>
-                                        <li className="header-text"><NavLink className="header-text"  to="/"><Icon name="home"/></NavLink></li>
-                                        <li className="header-text"><NavLink className="header-text"  to="/games">Games</NavLink></li>
+                                        <li className="header-text"><NavLink className="header-text" to="/"><Icon name="home"/></NavLink></li>
+                                        <li className="header-text"><NavLink className="header-text" to="/games">Games</NavLink></li>
                                         <li className="header-text"><NavLink className="header-text" to="/links">Links</NavLink></li>
                                         <li className="header-text"><NavLink className="header-text" to="/about">About</NavLink></li>
                                         <li className="header-text"><NavLink className="header-text" to="/sw">Star Wars</NavLink></li>
@@ -37,12 +37,12 @@ const Header: React.FC = () => {
                 </div>
                 <div className="logo-container just-on-big-display">
                     <h2 className="logo header-text">
-                        <Icon name="home"/>
+                        <NavLink className="header-text" to="/"><Icon name="home"/></NavLink>
                     </h2>
                 </div>
                 <div className="just-on-big-display">
                     <ul>
-                        <li className="header-text"><NavLink className="header-text"  to="/games">Games</NavLink></li>
+                        <li className="header-text"><NavLink className="header-text" to="/games">Games</NavLink></li>
                         <li className="header-text"><NavLink className="header-text" to="/links">Links</NavLink></li>
                         <li className="header-text"><NavLink className="header-text" to="/about">About</NavLink></li>
                         <li className="header-text"><NavLink className="header-text" to="/sw">Star Wars</NavLink></li>

@@ -1,0 +1,47 @@
+$halfScreenWidth: calc(50% - 20px);
+$fullScreenWidth: calc(100% - 20px);
+.character-card{
+  max-width: $halfScreenWidth;
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px rgba(0,0,0,0.5) solid;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.stats{
+  position: absolute;
+  right: 10px;
+  height: calc(100% - 2rem);
+  max-height: 100%;
+  width: calc(50% - 10px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stats li{
+  list-style: none;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.name{
+  font-size: 200%!important;
+}
+
+.character-img{
+  width: calc(50% - 20px);
+}
+
+.full-screen{
+  max-width: $fullScreenWidth!important;
+}
+
+.full-screen ul li{
+  font-size: 100%;
+}
+
