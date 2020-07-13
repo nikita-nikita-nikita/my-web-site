@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, MouseEvent} from "react";
 // @ts-ignore
 import {connect} from "react-redux";
 import InfoCard from "../../components/InfoCard";
@@ -6,7 +6,7 @@ import "./stylesTechnologies.scss";
 import {initialStateTechnologiesType} from "./reducer";
 import {rootStateType} from "../../store";
 interface actionOnPC {
-    onClick():void
+    onClick(event: MouseEvent<HTMLDivElement>|any):void
 }
 interface actionOnMobile {
     onMouseOver():void
@@ -22,7 +22,8 @@ const toggle = (toggleCards:Function):(actionOnMobile|actionOnPC)  => (/Android|
         },
     }
     :{
-        onClick() {
+        onClick(event) {
+            if(event.target.classList.contains('info-cards')||event.target.classList.contains('technologies-title'))
             toggleCards((isToggled:boolean)=>!isToggled)
         }
     }
