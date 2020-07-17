@@ -27,7 +27,10 @@ const toggle = (toggleCards:Function):(actionOnMobile|actionOnPC)  => (/Android|
             toggleCards((isToggled:boolean)=>!isToggled)
         }
     }
-const Technologies: React.FC<initialStateTechnologiesType> = ({links}) => {
+type Props = {
+    links: initialStateTechnologiesType
+}
+const Technologies: React.FC<Props> = ({links}) => {
     const [isToggled, toggleCards] = useState(false);
     return (
         <div className="technologies-section">
@@ -47,7 +50,7 @@ const Technologies: React.FC<initialStateTechnologiesType> = ({links}) => {
 };
 
 const mapStateToProps = (rootState: rootStateType) => ({
-    links: rootState.technologies.links
+    links: rootState.technologies
 });
 
 export default connect(mapStateToProps, null)(Technologies);

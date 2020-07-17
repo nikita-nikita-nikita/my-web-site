@@ -1,6 +1,4 @@
 .about-page{
-  margin: 0 auto;
-  width: 60%;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -78,9 +76,3 @@
   cursor: pointer;
 }
 
-
-@media (max-width: 800px) {
-  .about-page{
-    width: 100%;
-  }
-}

@@ -12,7 +12,7 @@ const me:stats = {
 }
 
 const AboutPage = () => (
-    <div className="about-page no-footer">
+    <main className="about-page no-footer">
         <h1 className="content-before-footer">About me</h1>
         <CharacterCard imgLink={img} fullScreenCardClass>
             <li className="name">{me.name}</li>
@@ -42,7 +42,7 @@ const AboutPage = () => (
                 </BeautifulList>
             </div>
         </div>
-    </div>
+    </main>
 
 );
 

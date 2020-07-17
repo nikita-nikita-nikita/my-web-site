@@ -9,8 +9,10 @@ import thunk from 'redux-thunk';
 // @ts-ignore
 import { createBrowserHistory } from 'history';
 import {initialStateTechnologiesType} from "../src/containers/Technologies/reducer";
+import {initialStateLinksType} from "../src/containers/Links/reducer";
 
-import TechnologiesReducer from "../src/containers/Technologies/reducer"
+import TechnologiesReducer from "../src/containers/Technologies/reducer";
+import LinksReducer from "../src/containers/Links/reducer"
 
 export const history = createBrowserHistory();
 
@@ -22,7 +24,8 @@ const middlewares = [
 ];
 
 const reducers = {
-    technologies:TechnologiesReducer
+    technologies:TechnologiesReducer,
+    links:LinksReducer
 }
 
 const composedEnhancers = compose(
@@ -42,6 +45,7 @@ const store = createStore(
 
 export type rootStateType = {
     technologies:initialStateTechnologiesType,
+    links:initialStateLinksType
     router:any
 }
 

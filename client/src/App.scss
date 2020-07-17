@@ -59,6 +59,7 @@ a{
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  align-items: center;
 }
 
 .no-footer{
@@ -67,4 +68,25 @@ a{
 
 .footer{
   flex: 0 0 auto;
+}
+
+main{
+  margin: 10px;
+  box-sizing: border-box;
+  width: 60%;
+}
+
+@media (max-width: 800px) {
+  main{
+    width: 100%;
+  }
+}
+
+.d-flex{
+  display: flex!important;
+}
+
+.all-center{
+  justify-content: center;
+  align-items: center;
 }

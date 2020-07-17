@@ -9,7 +9,6 @@ import GamesPage from "../../pages/GamePage";
 import StarWarsPage from "../../pages/StarWarsPage";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import HelloMessageComponent from "../../pages/HelloPage";
 
 const Routing: React.FC = () => {
     return (
@@ -23,7 +22,6 @@ const Routing: React.FC = () => {
                 <Route path="/sw" exact component={StarWarsPage}/>
                 <Route path="*" exact component={NotFound} />
             </Switch>
-            <HelloMessageComponent />
             <Footer />
         </>
     )

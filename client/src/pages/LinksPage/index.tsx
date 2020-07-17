@@ -1,6 +1,10 @@
 import React from "react";
 import "./stylesLinks.scss";
-
-const LinksPage = () => (<h2 className="no-footer">Links page</h2>);
+import Links from "../../containers/Links";
+const LinksPage = () => (
+    <main className="no-footer">
+        <Links/>
+    </main>
+);
 
 export default LinksPage;
