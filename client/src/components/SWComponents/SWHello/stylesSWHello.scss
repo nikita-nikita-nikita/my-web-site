@@ -1,0 +1,32 @@
+.sw-hello-h1-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  width: calc(100% - 20rem);
+}
+
+.sw-hello-h1-container:before{
+  width: 256px;
+  height: 256px;
+  content: "";
+  background-image: url("https://s1.iconbird.com/ico/0912/ToolbarIcons/w256h2561346685452ArrowRight.png");
+  bottom: calc(100% - 256px);
+  position: absolute;
+  left: 0;
+}
+
+@media screen and (max-width: 1000px){
+  .sw-hello-h1-container:before{
+    transform: rotate(90deg);
+    left: 100%;
+  }
+  .sw-hello-h1-container{
+    height: 60rem;
+    width: calc(100% - 256px);
+    justify-content: normal;
+    align-items: center;
+  }
+}

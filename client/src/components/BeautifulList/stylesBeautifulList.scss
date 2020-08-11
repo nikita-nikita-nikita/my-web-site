@@ -1,0 +1,51 @@
+// delete default checkbox
+.about-checkbox{
+  display: none;
+}
+
+
+// triangle, checkbox trigger
+.triangle{
+  display: inline-block;
+  margin-left: 5px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-left: 16px solid black;
+  border-bottom: 8px solid transparent;
+  transition-duration: .4s;
+}
+// list in checkbox
+.checkbox-content ul li{
+  text-align: left;
+}
+
+
+// Styles to checked checkbox
+.about-checkbox:checked + .checkbox-content .triangle{
+  transform: rotate(90deg);
+}
+
+.checkbox-content ul{
+  display: none;
+  opacity: 0;
+  transition-duration: .8s;
+}
+
+.about-checkbox:checked + .checkbox-content ul{
+  opacity: 1;
+}
+.about-checkbox:checked + .checkbox-content ul{
+  display: block;
+}
+
+.about-paragraph{
+  font-size: 150%;
+}
+.checkbox-content .about-paragraph:hover, .checkbox-content .triangle:hover{
+  cursor: pointer;
+}
+
+.beautiful-label{
+  display: block;
+}
