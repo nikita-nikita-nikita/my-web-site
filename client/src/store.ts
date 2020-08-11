@@ -1,34 +1,37 @@
 import {
     createStore,
     applyMiddleware,
-    compose,
     combineReducers
 } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from "redux-saga";
 // @ts-ignore
 import { createBrowserHistory } from 'history';
-import {initialStateTechnologiesType} from "../src/containers/Technologies/reducer";
-import {initialStateLinksType} from "../src/containers/Links/reducer";
-
-import TechnologiesReducer from "../src/containers/Technologies/reducer";
-import LinksReducer from "../src/containers/Links/reducer"
+import TechnologiesReducer, {initialStateTechnologiesType} from "../src/containers/Technologies/reducer";
+import LinksReducer, {initialStateLinksType} from "../src/containers/Links/reducer";
+import {watchLoadData} from "./containers/SWContainer/sagas";
+import SWReducer, {initialStateSWType} from "./containers/SWContainer/reducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 export const history = createBrowserHistory();
 
 const initialState = {};
 
+const sagaMiddleware = createSagaMiddleware();
 const middlewares = [
     thunk,
+    sagaMiddleware,
     routerMiddleware(history)
 ];
 
 const reducers = {
     technologies:TechnologiesReducer,
-    links:LinksReducer
+    links:LinksReducer,
+    starWars:SWReducer
 }
 
-const composedEnhancers = compose(
+const composedEnhancers = composeWithDevTools(
     applyMiddleware(...middlewares)
 );
 
@@ -42,10 +45,12 @@ const store = createStore(
     initialState,
     composedEnhancers
 );
+sagaMiddleware.run(watchLoadData);
 
 export type rootStateType = {
-    technologies:initialStateTechnologiesType,
+    technologies:initialStateTechnologiesType
     links:initialStateLinksType
+    starWars:initialStateSWType
     router:any
 }
 

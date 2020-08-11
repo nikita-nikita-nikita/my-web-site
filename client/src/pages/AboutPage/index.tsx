@@ -1,10 +1,9 @@
 import React from "react";
 import "./stylesAbout.scss";
 import CharacterCard from "../../components/CharacterCard";
-import {stats} from "../../components/CharacterCard";
 import img from "../../images/me.jpg";
 import BeautifulList from "../../components/BeautifulList";
-const me:stats = {
+const me:any = {
     name: 'Nikita',
     age: 17,
     gender: 'male',
@@ -14,7 +13,7 @@ const me:stats = {
 const AboutPage = () => (
     <main className="about-page no-footer">
         <h1 className="content-before-footer">About me</h1>
-        <CharacterCard imgLink={img} fullScreenCardClass>
+        <CharacterCard imgLink={img} fullScreenCardClass isInsideContainer>
             <li className="name">{me.name}</li>
             <li>Age: {me.age}</li>
             <li>Gender: {me.gender}</li>

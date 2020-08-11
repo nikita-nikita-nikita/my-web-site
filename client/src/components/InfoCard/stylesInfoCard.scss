@@ -1,4 +1,4 @@
-.container{
+.info-card-container{
   width: 19%;
   margin-top: 10px;
   display: flex;
@@ -14,7 +14,7 @@
   width: 100%;
 }
 
-.container:hover{
+.info-card-container:hover{
   cursor: pointer;
   filter: grayscale(0);
   transform: translateZ(20px);

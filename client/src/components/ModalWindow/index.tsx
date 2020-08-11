@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import './stylesModalWindow.scss';
-import {Button} from "semantic-ui-react";
+import {Icon} from "semantic-ui-react";
 
 interface Props {
     title: string,
-    body: string
+    children: string
 }
 
-const ModalWindow: React.FC<Props> = ({title, body}) => {
+const ModalWindow: React.FC<Props> = ({title, children}) => {
     const [show, setShow] = useState(true)
     const onClose = ({ target }: any) => {
         const { className } = target;
@@ -19,11 +19,11 @@ const ModalWindow: React.FC<Props> = ({title, body}) => {
             <div className="popup-body" onClick={onClose}>
                 <div className="popup-content">
                     <h2 className="popup-title">{title}</h2>
-                    <p className="body">
-                        {body}
-                    </p>
+                    {children}
                     <div className="popup-close">
-                        <Button icon="close" className="popup-close-btn" onClick={onClose}/>
+                        <button className="popup-close-btn" onClick={onClose}>
+                            <Icon name="close"/>
+                        </button>
                     </div>
                 </div>
             </div>

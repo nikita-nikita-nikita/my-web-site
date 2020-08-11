@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from "react-redux";
 import {loadLinks, deleteLinks} from "./actions";
 import {initialStateLinksType} from "./reducer";
+import {rootStateType} from "../../store";
 
 interface Props {
     links:initialStateLinksType,
@@ -18,10 +19,8 @@ const Links:React.FC<Props> = ({links, loadLinks, deleteLinks}) => {
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         loadLinks().then(()=>setLoading(false));
-        return () => {
-            deleteLinks()
-        }
-    }, []);
+        return () => deleteLinks();
+    }, [loadLinks, deleteLinks]);
     if(isLoading) return <Spinner/>;
     return (
         <div className="links">
@@ -31,7 +30,7 @@ const Links:React.FC<Props> = ({links, loadLinks, deleteLinks}) => {
     )
 };
 
-const mapStateToProps = (rootState:any)=>({
+const mapStateToProps = (rootState:rootStateType)=>({
     links:rootState.links
 });
 

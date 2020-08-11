@@ -8,7 +8,7 @@ type Props = {
 
 const InfoCard:React.FC<Props> = ({link, title}) => {
     return (
-        <div className="container">
+        <div className="info-card-container">
             <img src={link} className="img" alt={title} />
             <h2 className="title">{title}</h2>
         </div>

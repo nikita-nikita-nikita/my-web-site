@@ -48,11 +48,14 @@
   top: 10px;
   right: 10px;
 }
-
 .popup-close-btn{
-  background-color: white!important;
+  font-size: 20px;
+  background: none;
+  border: none;
 }
-
+.popup-close-btn:focus{
+  outline: none;
+}
 @keyframes user-greetings{
   0%{
     transform: translate(-100%, 0px);

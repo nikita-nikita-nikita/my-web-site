@@ -16,10 +16,10 @@ const Routing: React.FC = () => {
             <Header />
             <Switch>
                 <Route path="/" exact component={MainPage}/>
-                <Route path="/links" exact component={LinksPage}/>
-                <Route path="/about" exact component={AboutPage}/>
-                <Route path="/games" exact component={GamesPage}/>
-                <Route path="/sw" exact component={StarWarsPage}/>
+                <Route path="/links"  component={LinksPage}/>
+                <Route path="/about"  component={AboutPage}/>
+                <Route path="/games"  component={GamesPage}/>
+                <Route path="/sw/"  component={StarWarsPage}/>
                 <Route path="*" exact component={NotFound} />
             </Switch>
             <Footer />

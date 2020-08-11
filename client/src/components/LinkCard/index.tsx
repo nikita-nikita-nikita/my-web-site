@@ -60,13 +60,11 @@ const LinkCard: React.FC<Props> = ({avatar, linkToProfile, name, nickname}) => {
                     className="copy-link-button"
                     onClick={copyToClipboard}
                     onMouseOver={shouldShowElement}
-                    onMouseOut={()=> {
-                        setHovered(false);
-                        setTimeout(()=>setCopied(false), 300);
-                    }}
+                    onMouseOut={()=> setHovered(false)}
+                    onBlur={()=> setCopied(false)}
                     aria-describedby={`tooltip-${name}`}
                     >
-                    Copy<Icon name="copy"/>
+                    Copy <Icon name="copy"/>
                     <div
                         className="tooltip"
                         role="tooltip"

@@ -1,7 +1,9 @@
 $halfScreenWidth: calc(50% - 20px);
 $fullScreenWidth: calc(100% - 20px);
+$thirdScreenWidth: calc(30% - 20px);
 .character-card{
-  max-width: $halfScreenWidth;
+  width: $halfScreenWidth;
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   padding: 1rem;
@@ -9,12 +11,13 @@ $fullScreenWidth: calc(100% - 20px);
   border: 1px rgba(0,0,0,0.5) solid;
   position: relative;
   margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .stats{
+  height: calc(100% - 2rem);
   position: absolute;
   right: 10px;
-  height: calc(100% - 2rem);
   max-height: 100%;
   width: calc(50% - 10px);
   display: flex;
@@ -35,13 +38,44 @@ $fullScreenWidth: calc(100% - 20px);
 
 .character-img{
   width: calc(50% - 20px);
+  object-fit: scale-down;
 }
 
-.full-screen{
-  max-width: $fullScreenWidth!important;
+.full-screen-character-card{
+  width: $fullScreenWidth!important;
 }
 
-.full-screen ul li{
+.full-screen-character-card ul li{
   font-size: 100%;
 }
 
+.sw-card-color{
+  background-color: #151515;
+}
+
+.random-object{
+  width: $thirdScreenWidth;
+  height: calc(100% - 20px);
+  margin: 10px 0;
+  object-fit:cover;
+}
+
+.vertical{
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  .character-img{
+    width: 100%;
+    max-height: calc(50% - 20px);
+  }
+  .stats{
+    height: calc(50% - 20px);
+    left: 10px;
+    bottom: 10px;
+  }
+}
+
+.inside-container{
+  height: 100%;
+}

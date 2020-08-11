@@ -16,7 +16,7 @@ class apiLinksService {
     // telegram don't have api to take info about profile ¯\_(ツ)_/¯
     getTelegram = async () => ({nickname:"@STALINNASHPRESIDENT" /*rofl*/ , name:'telegram', linkToProfile:"tg://tele.gg/STALINNASHPRESIDENT"});
 
-    getGmail = async () => ({nickname:"neymarenko123@gmail.com", name:'mail', linkToProfile:"mailto:?Body"});
+    getGmail = async () => ({nickname:"neymarenko123@gmail.com", name:'mail', linkToProfile:"mailto:neymarenko123@gmail.com?Body"});
 }
 
 export default new apiLinksService();

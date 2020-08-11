@@ -1,6 +1,8 @@
 import React from "react";
-import "./stylesStarWars.scss";
+import SWContainer from "../../containers/SWContainer";
 
-const StarWarsPage = () => (<h2 className="no-footer">Star Wars page</h2>);
+const StarWarsPage = () => (
+    <SWContainer />
+);
 
 export default StarWarsPage;

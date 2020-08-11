@@ -10,9 +10,10 @@ export type initialStateLinksType = Array<linkCard>;
 export default (state:initialStateLinksType = [], action:any) => {
     switch (action.type) {
         case "LOAD_POSTS":
-            return action.payload
+            return action.payload;
         case "DELETE_POSTS":
-            return []
+            return [];
+        default:
+            return state;
     }
-    return state;
 }
