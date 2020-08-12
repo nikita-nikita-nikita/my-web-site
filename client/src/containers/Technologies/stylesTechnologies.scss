@@ -1,0 +1,36 @@
+.info-cards{
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: .8s;
+  transform: rotateX(55deg) rotateY(-10deg) rotateZ(-45deg);
+  transform-style: preserve-3d;
+  user-select: none;
+}
+.technologies-section{
+  width: 100%!important;
+  margin-bottom: 25%;
+  perspective: 1000px;
+}
+.technologies-title, h1{
+  width: 100%;
+  font-size: 100px;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+
+@media (max-width: 1000px){
+  .technologies-title, h1{
+    width: 100%;
+    font-size: 30px;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+}
+
+.toggled{
+  transform: rotate(0);
+}
