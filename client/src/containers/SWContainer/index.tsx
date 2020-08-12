@@ -65,17 +65,17 @@ const SWContainer:React.FC<Props> = (
         <main className="no-footer full-screen sw-color sw-main-page">
             <RandomObjectsContainer randomObjects={randomObjects}/>
             <SWSwitchPanel/>
-            <Route exact path="/sw" component={SWHello}/>
-            <Route path="/sw/persons" render={()=> <SWList object={person} list={list} deleteList={deleteList} loadList={loadPersonList}/>}/>
-            <Route path="/sw/planets" render={()=> <SWList object={planet} list={list} deleteList={deleteList} loadList={loadPlanetList}/>}/>
-            <Route path="/sw/starships" render={()=> <SWList object={starship} list={list} deleteList={deleteList} loadList={loadStarshipList}/>}/>
-            <Route path="/sw/persons/:id" render={({match:{params:{id}}}:RouteComponentProps<TParams>)=>
+            <Route exact path="/my-web-site/sw" component={SWHello}/>
+            <Route path="/my-web-site/sw/persons" render={()=> <SWList object={person} list={list} deleteList={deleteList} loadList={loadPersonList}/>}/>
+            <Route path="/my-web-site/sw/planets" render={()=> <SWList object={planet} list={list} deleteList={deleteList} loadList={loadPlanetList}/>}/>
+            <Route path="/my-web-site/sw/starships" render={()=> <SWList object={starship} list={list} deleteList={deleteList} loadList={loadStarshipList}/>}/>
+            <Route path="/my-web-site/sw/persons/:id" render={({match:{params:{id}}}:RouteComponentProps<TParams>)=>
                 <SWPersonCard person={person} id={id} loadPerson={loadPerson}/>
             }/>
-            <Route path="/sw/planets/:id" render={({match:{params:{id}}}:RouteComponentProps<TParams>)=>
+            <Route path="/my-web-site/sw/planets/:id" render={({match:{params:{id}}}:RouteComponentProps<TParams>)=>
                 <SWPlanetCard planet={planet} id={id} loadPlanet={loadPlanet}/>
             }/>
-            <Route path="/sw/starships/:id" render={({match:{params:{id}}}:RouteComponentProps<TParams>)=>
+            <Route path="/my-web-site/sw/starships/:id" render={({match:{params:{id}}}:RouteComponentProps<TParams>)=>
                 <SWStarshipCard starship={starship} id={id} loadStarship={loadStarship}/>
             }/>
         </main>

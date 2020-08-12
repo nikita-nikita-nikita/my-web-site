@@ -24,11 +24,11 @@ const Header: React.FC = () => {
                             showContextMenu ?
                                 (
                                     <ul>
-                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/"><Icon name="home"/></NavLink></li>
-                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/games">Games</NavLink></li>
-                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/links">Links</NavLink></li>
-                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/about">About</NavLink></li>
-                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/sw">Star Wars</NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/"><Icon name="home"/></NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/games">Games</NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/links">Links</NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/about">About</NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/sw">Star Wars</NavLink></li>
                                     </ul>
                                 )
                                 : null
@@ -38,15 +38,15 @@ const Header: React.FC = () => {
                 </div>
                 <div className="logo-container just-on-big-display">
                     <h2 className="logo header-text">
-                        <NavLink className="header-text" to="/"><Icon name="home"/></NavLink>
+                        <NavLink className="header-text" to="/my-web-site/"><Icon name="home"/></NavLink>
                     </h2>
                 </div>
                 <div className="just-on-big-display">
                     <ul>
-                        <li className="header-text"><NavLink className="header-text" to="/games">Games</NavLink></li>
-                        <li className="header-text"><NavLink className="header-text" to="/links">Links</NavLink></li>
-                        <li className="header-text"><NavLink className="header-text" to="/about">About</NavLink></li>
-                        <li className="header-text"><NavLink className="header-text" to="/sw">Star Wars</NavLink></li>
+                        <li className="header-text"><NavLink className="header-text" to="/my-web-site/games">Games</NavLink></li>
+                        <li className="header-text"><NavLink className="header-text" to="/my-web-site/links">Links</NavLink></li>
+                        <li className="header-text"><NavLink className="header-text" to="/my-web-site/about">About</NavLink></li>
+                        <li className="header-text"><NavLink className="header-text" to="/my-web-site/sw">Star Wars</NavLink></li>
                     </ul>
                 </div>
             </nav>
