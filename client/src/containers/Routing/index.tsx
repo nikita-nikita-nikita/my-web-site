@@ -28,5 +28,4 @@ const Routing: React.FC = () => {
         </>
     )
 }
-
 export default Routing;
