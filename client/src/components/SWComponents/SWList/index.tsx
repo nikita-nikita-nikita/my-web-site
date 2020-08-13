@@ -23,7 +23,7 @@ const SWList:React.FC<Props> = ({list, deleteList, loadList, object}) => {
             <ul className="sw-list">
                 {list.map(item=>(
                     <Link to={item.id}>
-                        <li key={item.id}>
+                        <li key={item.id.toString()}>
                             {item.name}
                         </li>
                     </Link>

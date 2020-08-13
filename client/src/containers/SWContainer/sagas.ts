@@ -3,21 +3,18 @@ import {LOAD_RANDOM_OBJECTS, LOAD_SW_LIST, LOAD_SW_PERSON, LOAD_SW_PLANET, LOAD_
 import {person, starship, planet, swList} from "./reducer";
 import {putRandomObjects, putList, putPersons, putPlanet, putStarship} from "./actions";
 import { takeEvery, put, call } from "redux-saga/effects";
-function randomInteger(min:number, max:number):number {
-    const rand = min - 0.5 + Math.random() * (max - min + 1);
-    return Math.round(rand);
-}
+import {randomInteger} from "../../helpers/randomNumber";
+
 function* workerLoadRandomObjects() {
     const person:person = yield call(()=>SWApiService.getPerson(randomInteger(1,10)));
-    const planet:planet = yield call(()=>SWApiService.getPlanet(randomInteger(1,10)));
-    const validNumbers = [2,3,5,7,9,10,11,12,13];
-    const starship:starship = yield call(()=>SWApiService.getStarship(validNumbers[randomInteger(0,8)]));
+    const planet:planet = yield call(()=>SWApiService.getPlanet(randomInteger(2,10)));
+    const validNumbers = [5,9,10];
+    const starship:starship = yield call(()=>SWApiService.getStarship(validNumbers[randomInteger(0,2)]));
     yield put(putRandomObjects({planet, starship, person}));
 }
-
 function* workerLoadPersonList(action:any) {
-    const persons:swList = yield call(()=>SWApiService.getAllObjects(action.payload));
-    yield put(putList(persons));
+    const list:swList = yield call(()=>SWApiService.getAllObjects(action.payload));
+    yield put(putList(list));
 }
 
 function* workerLoadPerson(action:any){

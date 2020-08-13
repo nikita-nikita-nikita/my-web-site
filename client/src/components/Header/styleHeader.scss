@@ -44,7 +44,10 @@
   vertical-align: center;
   height: 100%;
 }
-
+.header-nav-list{
+  margin: 0;
+  height: 100%;
+}
 // Hover text
 .header-text:hover{
   color: #22D88F!important;
@@ -96,7 +99,7 @@
 
 // Media
 @media (max-width: 499px) {
-  .just-on-big-display{
+  .header-just-on-big-display{
     display: none;
   }
 
@@ -108,7 +111,7 @@
 
 
 @media (min-width: 500px) {
-  .just-on-small-display{
+  .header-just-on-small-display{
     display: none;
   }
 }
