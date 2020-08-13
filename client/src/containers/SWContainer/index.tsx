@@ -57,9 +57,7 @@ const SWContainer:React.FC<Props> = (
     useEffect(()=>{
         loadRandomObjects()
     }, [loadRandomObjects]);
-    useInterval(()=>{
-        loadRandomObjects()
-    }, 5000);
+    useInterval(()=>loadRandomObjects(), 5000);
 
     return (
         <main className="no-footer full-screen sw-color sw-main-page">

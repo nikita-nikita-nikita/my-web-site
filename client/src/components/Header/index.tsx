@@ -13,7 +13,7 @@ const Header: React.FC = () => {
     return (
         <header className="header no-footer">
             <nav className="nav-header">
-                <div className="burger-menu just-on-small-display">
+                <div className="burger-menu header-just-on-small-display">
                     <div className="burger-menu">
                         <button
                             className="burger-menu-btn header-text"
@@ -36,13 +36,13 @@ const Header: React.FC = () => {
 
                     </div>
                 </div>
-                <div className="logo-container just-on-big-display">
+                <div className="logo-container header-just-on-big-display">
                     <h2 className="logo header-text">
                         <NavLink className="header-text" to="/my-web-site/"><Icon name="home"/></NavLink>
                     </h2>
                 </div>
-                <div className="just-on-big-display">
-                    <ul>
+                <div className="header-just-on-big-display">
+                    <ul className="header-nav-list">
                         <li className="header-text"><NavLink className="header-text" to="/my-web-site/games">Games</NavLink></li>
                         <li className="header-text"><NavLink className="header-text" to="/my-web-site/links">Links</NavLink></li>
                         <li className="header-text"><NavLink className="header-text" to="/my-web-site/about">About</NavLink></li>
