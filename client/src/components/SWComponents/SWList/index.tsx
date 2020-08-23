@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-// @ts-ignore
 import {Link, useHistory} from "react-router-dom";
 import "./stylesSWList.scss";
 import {swList, planet, starship, person} from "../../../containers/SWContainer/reducer";
@@ -22,7 +21,7 @@ const SWList:React.FC<Props> = ({list, deleteList, loadList, object}) => {
         list ?
             <ul className="sw-list">
                 {list.map(item=>(
-                    <Link to={item.id}>
+                    <Link to={item.id.toString()}>
                         <li key={item.id.toString()}>
                             {item.name}
                         </li>

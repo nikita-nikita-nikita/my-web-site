@@ -1,10 +1,13 @@
 import React, {useState} from "react";
-// @ts-ignore
 import { NavLink } from 'react-router-dom';
 import {Icon} from "semantic-ui-react";
+import {Profile} from "../../containers/ProfileContainer/reducer";
 import "./styleHeader.scss";
+type Props = {
+    user:Profile|undefined
+}
 
-const Header: React.FC = () => {
+const Header: React.FC<Props> = ({user}) => {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const toggleContextMenu = () => setShowContextMenu(contextMenu => {
             return !contextMenu;
@@ -50,6 +53,16 @@ const Header: React.FC = () => {
                     </ul>
                 </div>
             </nav>
+            <div className="auth-profile-block">
+                {
+                    user
+                        ? <NavLink className="header-text" to="/my-web-site/profile"><img className="avatar-icon" src="https://i0.wp.com/crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif?fit=150%2C150&ssl=1" alt="avatar"/></NavLink>
+                        :
+                        <>
+                            <NavLink className="header-text" to="/my-web-site/login">Login </NavLink> <NavLink className="header-text" to="/my-web-site/register"> Register</NavLink>
+                        </>
+                }
+            </div>
         </header>
     )
 };

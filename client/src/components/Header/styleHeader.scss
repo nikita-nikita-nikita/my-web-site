@@ -1,3 +1,5 @@
+$avatar-height: 35px;
+
 // Header settings
 .header{
   display: flex;
@@ -63,6 +65,11 @@
   color: #fff;
 }
 
+.avatar-icon{
+  max-height: $avatar-height;
+  max-width: $avatar-height;
+  border-radius: 50%;
+}
 // Logo
 .logo{
   font-size: 2rem;
@@ -71,6 +78,21 @@
   width: auto;
   display: flex;
   justify-content: center;
+}
+
+//profile
+.auth-profile-block{
+  position: absolute;
+  right: 10px;
+  align-self: center;
+  justify-self: right;
+}
+.auth-profile-block a{
+  font-size: 1.5em;
+  margin-left: 10px;
+}
+.auth-profile-block a:first-child{
+  margin-left: 0;
 }
 // Context menu on small display
 .burger-menu ul{
