@@ -1,0 +1,1 @@
+{"version":3,"file":"fbConfig.js","sourceRoot":"","sources":["../../src/config/fbConfig.ts"],"names":[],"mappings":";;;;;;AAAA,oEAAqD;AACrD,oIAA6E;AAI7E,wBAAK,CAAC,aAAa,CAAC;IAChB,UAAU,EAAE,wBAAK,CAAC,UAAU,CAAC,IAAI,CAAC,uDAAgC,CAAC;IACnE,WAAW,EAAE,+CAA+C;CAC/D,CAAC,CAAC;AAEU,QAAA,KAAK,GAAG,wBAAK,CAAC,SAAS,EAAE,CAAC,UAAU,CAAC,OAAO,CAAC,CAAC"}

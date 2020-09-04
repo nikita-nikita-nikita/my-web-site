@@ -1,14 +1,36 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {card} from "../../containers/Technologies/reducer";
-import {Profile} from "../../containers/ProfileContainer/reducer";
+import {Profile} from "../../containers/AuthProfileContainer/reducer";
 
-const myApiServiceBaseUrl = "http://localhost:8080/";
+const myApiServiceBaseUrl = "http://localhost:8080/api";
 export type BaseRequestDataType = {
     email:string
     password:string
 }
-export const getTechnologies  = () => axios.get<Array<card>>(`${myApiServiceBaseUrl}api/technologies`);
 
-export const loginRequest = (loginData:BaseRequestDataType) => axios.post(`${myApiServiceBaseUrl}api/auth/login`, loginData);
+export type ResponseDataType = {
+    token:string
+    user:Profile
+};
 
-export const registerRequest = (registerData:BaseRequestDataType) => axios.post(`${myApiServiceBaseUrl}api/auth/register`, registerData);
+type DeleteRequestDataType = {
+    uuid:string
+    password:string
+}
+
+const myAxios = axios.create({
+    baseURL: myApiServiceBaseUrl,
+    headers: {token:window.localStorage.getItem("token")}
+});
+
+export const getTechnologiesRequest  = () => myAxios.get<Array<card>>(`/technologies`);
+
+export const loginRequest = (loginData:BaseRequestDataType) => myAxios.post<ResponseDataType>('/auth/login', loginData);
+
+export const registerRequest = (registerData:BaseRequestDataType) => myAxios.post<ResponseDataType>('/auth/register', registerData);
+
+export const changeUserRequest = (userData:BaseRequestDataType) => myAxios.put<ResponseDataType>('/auth/change', userData);
+
+export const loadCurrentUserRequest = () => myAxios.get<ResponseDataType>('/auth/user');
+
+export const deleteUserRequest = (uuid:string, password:string) => myAxios.delete<ResponseDataType>(`/auth/user${uuid}`,{headers: {password}});

@@ -1,7 +1,7 @@
 import {
     createStore,
     applyMiddleware,
-    combineReducers
+    combineReducers,
 } from 'redux';
 import { connectRouter, routerMiddleware, RouterState } from 'connected-react-router';
 import thunk from 'redux-thunk';
@@ -10,7 +10,7 @@ import { createBrowserHistory } from 'history';
 import TechnologiesReducer, {initialStateTechnologiesType} from "../src/containers/Technologies/reducer";
 import LinksReducer, {initialStateLinksType} from "../src/containers/Links/reducer";
 import SWReducer, {initialStateSWType} from "./containers/SWContainer/reducer";
-import ProfileReducer, {initialStateProfileType} from "../src/containers/ProfileContainer/reducer";
+import ProfileReducer, {initialStateProfileType} from "./containers/AuthProfileContainer/reducer";
 import {watchLoadData} from "./containers/SWContainer/sagas";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -55,5 +55,8 @@ export type rootStateType = {
     profile:initialStateProfileType
     router:RouterState
 }
+
+export type MapStateToPropsType<T = rootStateType> = (state:rootStateType) => T;
+export type GetRootStateType = () => rootStateType;
 
 export default store;

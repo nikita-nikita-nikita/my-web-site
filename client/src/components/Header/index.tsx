@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import { NavLink } from 'react-router-dom';
 import {Icon} from "semantic-ui-react";
-import {Profile} from "../../containers/ProfileContainer/reducer";
+import {Profile} from "../../containers/AuthProfileContainer/reducer";
 import "./styleHeader.scss";
 type Props = {
-    user:Profile|undefined
+    user:Profile| {}
 }
 
 const Header: React.FC<Props> = ({user}) => {
@@ -32,6 +32,7 @@ const Header: React.FC<Props> = ({user}) => {
                                         <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/links">Links</NavLink></li>
                                         <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/about">About</NavLink></li>
                                         <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/sw">Star Wars</NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/profile">Profile</NavLink></li>
                                     </ul>
                                 )
                                 : null
@@ -53,9 +54,9 @@ const Header: React.FC<Props> = ({user}) => {
                     </ul>
                 </div>
             </nav>
-            <div className="auth-profile-block">
+            <div className="auth-profile-block header-just-on-big-display">
                 {
-                    user
+                    Object.keys(user).length!==0
                         ? <NavLink className="header-text" to="/my-web-site/profile"><img className="avatar-icon" src="https://i0.wp.com/crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif?fit=150%2C150&ssl=1" alt="avatar"/></NavLink>
                         :
                         <>

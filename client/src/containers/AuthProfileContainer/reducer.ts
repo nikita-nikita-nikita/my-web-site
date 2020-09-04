@@ -1,15 +1,16 @@
 import {Action} from "redux";
 
 export type Profile = {
+    uuid:string
     email: string
     imgUrl?: string
     phoneNumber?: string
-    displayName?: string
+    username?: string
     emailVerified?: string,
 }
 
 export interface ActionType extends Action<string>{
-    payload:Profile
+    payload:Profile|{}
 }
 
 export type initialStateProfileType = Profile;

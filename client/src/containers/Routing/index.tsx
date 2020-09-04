@@ -1,5 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Route, Switch} from 'react-router-dom';
+import {connect} from "react-redux";
+import {getCurrentUser} from "../AuthProfileContainer/actions";
+import {MapStateToPropsType} from "../../store";
+import PrivateRoute from "./priviteRoute";
+import PublicRoute from "./publicRoute";
 import NotFound from "../../pages/NotFound";
 import MainPage from "../../pages/MainPage";
 import LinksPage from "../../pages/LinksPage";
@@ -11,12 +16,21 @@ import RegisterPage from "../../pages/RegisterPage";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import RedirectToHome from "../../components/RedirectToHome";
-import ProfileContainer from "../ProfileContainer";
+import ProfilePage from "../../pages/ProfilePage";
+import {Profile} from "../AuthProfileContainer/reducer";
 
-const Routing: React.FC = () => {
+type Props = {
+    user:Profile
+    getCurrentUser:Function
+}
+
+const Routing: React.FC<Props> = ({user, getCurrentUser}) => {
+    useEffect(()=>{
+        getCurrentUser();
+    }, [getCurrentUser]);
     return (
         <>
-            <Header user={undefined}/>
+            <Header user={user}/>
             <Switch>
                 <Route path="/" exact component={RedirectToHome}/>
                 <Route path="/my-web-site" exact component={MainPage}/>
@@ -24,13 +38,22 @@ const Routing: React.FC = () => {
                 <Route path="/my-web-site/about" component={AboutPage}/>
                 <Route path="/my-web-site/games" component={GamesPage}/>
                 <Route path="/my-web-site/sw/" component={StarWarsPage}/>
-                <Route path="/my-web-site/profile" component={ProfileContainer}/>
-                <Route path="/my-web-site/login" component={LoginPage}/>
-                <Route path="/my-web-site/register" component={RegisterPage}/>
+                <PrivateRoute path="/my-web-site/profile" component={ProfilePage}/>
+                <PublicRoute path="/my-web-site/login" component={LoginPage}/>
+                <PublicRoute path="/my-web-site/register" component={RegisterPage}/>
                 <Route path="*" exact component={NotFound}/>
             </Switch>
             <Footer/>
         </>
     )
 }
-export default Routing;
+
+type StateFromReduxType = {user:Profile};
+
+const mapStateToProps:MapStateToPropsType<StateFromReduxType> = (state) => ({user:state.profile});
+
+const mapDispatchToProps = {
+    getCurrentUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routing);

@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import LoginForm from "../../containers/ProfileContainer/auth/login";
+import LoginForm from "../../containers/AuthProfileContainer/auth/login";
 
 const LoginPage:React.FunctionComponent = () => {
     return(

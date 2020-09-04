@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {connect} from "react-redux";
 import {Segment, Form, Button} from "semantic-ui-react";
+import {AxiosError} from "axios";
 import isEmail from 'validator/lib/isEmail';
 import {login} from "../../actions";
 
@@ -8,20 +9,20 @@ type Props = {
     login:Function
 }
 
-const LoginForm:React.FunctionComponent<Props> = ({login}) => {
+const LoginForm:React.FunctionComponent<Props> = ({login:loginUser}) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [isLoading, setLoading] = useState<boolean>(false);
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
     const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
-    const [error, setError] = useState<Error|null>(null);
+    const [error, setError] = useState<AxiosError|null>(null);
     const submit = async () => {
         const isValid = isEmailValid&&isPasswordValid;
         if(!isValid||isLoading) return;
         setLoading(true);
-        console.log("login");
+        setError(null);
         try {
-            await login({email, password})
+            await loginUser({email, password})
         }catch (e){
             setError(e);
         }finally {
@@ -51,6 +52,11 @@ const LoginForm:React.FunctionComponent<Props> = ({login}) => {
                     onChange={ev => setPassword(ev.target.value)}
                     onBlur={() => setIsPasswordValid(Boolean(password.length>=6))}
                 />
+                {
+                    error
+                        ? <p className="error">{error.response?.data.message}</p>
+                        : null
+                }
                 <Button type="submit" color="teal" fluid size="large" loading={isLoading} primary>
                     Login
                 </Button>

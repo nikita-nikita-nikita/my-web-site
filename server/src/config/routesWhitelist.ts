@@ -1,7 +1,8 @@
 const whitelist = [
     "/auth/register",
     "/auth/login",
-    "/api/technologies",
+    "/auth/change",
+    "/technologies",
 ];
 
 export default whitelist;

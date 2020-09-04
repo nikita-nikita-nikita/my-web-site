@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import RegisterForm from "../../containers/ProfileContainer/auth/register";
+import RegisterForm from "../../containers/AuthProfileContainer/auth/register";
 
 const RegisterPage:React.FunctionComponent = () => {
     return(
