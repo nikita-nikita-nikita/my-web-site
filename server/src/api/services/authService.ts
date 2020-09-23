@@ -2,7 +2,7 @@ import fbAuthRepository, {AllUserData, NoPassword} from "../../data/repositories
 import {createToken} from "../../helpers/jwtHelper";
 import {encrypt} from "../../helpers/crypt";
 import {compare} from "../../helpers/crypt";
-
+import { v4 as uuidv4 } from 'uuid';
 
 type ResponseType = {
     user: NoPassword,
@@ -15,7 +15,8 @@ export const login = async ({ uuid }:AllUserData):Promise<ResponseType> => ({
 });
 
 export const registerUser = async (user:AllUserData):Promise<ResponseType|null> => {
-    await fbAuthRepository.create({...user, password: await encrypt(user.password)});
+    const uuid = uuidv4();
+    await fbAuthRepository.create({...user, password: await encrypt(user.password)}, uuid);
     const addedUser = await fbAuthRepository.getByEmail(user.email);
     return login(addedUser);
 }

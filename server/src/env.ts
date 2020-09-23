@@ -9,6 +9,10 @@ const env = {
     },
     jwt:{
         secret: process.env.APP_SECRET
+    },
+    imgur:{
+        imgurId:process.env.IMGUR_ID,
+        imgurSecret:process.env.IMGUR_SECRET,
     }
 };
 

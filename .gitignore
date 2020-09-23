@@ -3,3 +3,9 @@ node_modules/
 client/build
 .env
 nikita-bludov-web-site-firebase-adminsdk.json
+
+server/dist/
+server/build/
+client/dist/
+client/build/
+*.js

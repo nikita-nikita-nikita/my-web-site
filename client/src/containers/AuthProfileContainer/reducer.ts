@@ -3,7 +3,7 @@ import {Action} from "redux";
 export type Profile = {
     uuid:string
     email: string
-    imgUrl?: string
+    imageUrl?: string
     phoneNumber?: string
     username?: string
     emailVerified?: string,

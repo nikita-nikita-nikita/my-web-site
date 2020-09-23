@@ -7,7 +7,9 @@ import {getImageAvatar} from "../../../helpers/imgHelper";
 import {change, signOut, del} from "../actions";
 import validator from "validator";
 import "../stylesProfileAuth.scss";
-import {Form} from "semantic-ui-react";
+import {Form, Icon} from "semantic-ui-react";
+import ifNotUndefined from "../../../helpers/ifNotUndefined";
+
 
 type Props = {
     user:Profile,
@@ -24,6 +26,7 @@ const ProfileContainer:React.FunctionComponent<Props> = (
     const [email, setEmail] = useState<string>(user.email ? user.email: "");
     const [newPassword, setNewPassword] = useState<string>("");
     const [currentPassword, setCurrentPassword] = useState<string>("");
+    const [newImage, setNewImage] = useState<string>(ifNotUndefined(user.imageUrl, ""))
     //loading
     const [isLoading, setLoading] = useState<boolean>(false);
     // errors
@@ -139,12 +142,19 @@ const ProfileContainer:React.FunctionComponent<Props> = (
                 </div>
             </Form>
         </>
-    )
+    );
+
+    // const getImageLink = (event) => {
+    //    todo add hoc-imageService
+    // }
+
     return(
         <div className="profile-container">
             <div className="static-profile-data-container">
                 <div className="avatar-container">
-                    <img src={getImageAvatar(user.imgUrl)} alt="avatar"/>
+                    <img src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))} alt="avatar"/>
+                    <Icon name="plus"/>
+                    <input name="image" type="file"/>
                 </div>
                 <div className="user-data-container">
                     <h2 className="profile-username">{user.username? user.username: "Enter your username downside"}</h2>
@@ -175,5 +185,5 @@ const mapDispatchToProps = {
     signOut,
     del
 }
-//@ts-gn
+
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
