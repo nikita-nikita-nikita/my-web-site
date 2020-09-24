@@ -152,9 +152,9 @@ const ProfileContainer:React.FunctionComponent<Props> = (
         <div className="profile-container">
             <div className="static-profile-data-container">
                 <div className="avatar-container">
+                    <input name="image" type="file"/>
                     <img src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))} alt="avatar"/>
                     <Icon name="plus"/>
-                    <input name="image" type="file"/>
                 </div>
                 <div className="user-data-container">
                     <h2 className="profile-username">{user.username? user.username: "Enter your username downside"}</h2>

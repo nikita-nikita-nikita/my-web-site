@@ -1,5 +1,5 @@
 import {images} from "../../config/fbConfig";
-import BaseClass from "./baseInterface";
+import BaseClass from "./baseRepository";
 
 export type BaseImageType = {
     link: string
