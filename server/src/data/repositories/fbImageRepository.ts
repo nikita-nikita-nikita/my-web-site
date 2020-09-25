@@ -11,8 +11,13 @@ export type ImageType = {
     deleteHash: string
     userId:string
 }
+export type DataToUpdate = {
+    link?: string
+    deleteHash?: string
+    userId?:string
+}
 
-class FbImageRepository extends BaseClass<BaseImageType, ImageType>{
+class FbImageRepository extends BaseClass<BaseImageType, ImageType, DataToUpdate>{
     // Base ...
 
     // Custom

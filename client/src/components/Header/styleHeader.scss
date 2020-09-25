@@ -1,4 +1,4 @@
-$avatar-height: 35px;
+$avatar-height: 40px;
 
 // Header settings
 .header{
@@ -66,8 +66,9 @@ $avatar-height: 35px;
 }
 
 .avatar-icon{
-  max-height: $avatar-height;
-  max-width: $avatar-height;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
 }
 // Logo
@@ -86,10 +87,15 @@ $avatar-height: 35px;
   right: 10px;
   align-self: center;
   justify-self: right;
+  width: 40px;
+  height: 40px;
 }
+
 .auth-profile-block a{
   font-size: 1.5em;
   margin-left: 10px;
+  width: 100%;
+  height: 100%;
 }
 .auth-profile-block a:first-child{
   margin-left: 0;

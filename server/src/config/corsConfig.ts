@@ -8,7 +8,7 @@ const cors = originalCors({
         if(whitelist.indexOf(origin) !== -1) callback(null, true);
         else callback(new Error("Wrong domain"), false);
     },
-    methods:["GET", "POST", "PUT", "DELETE"]
+    methods:["GET", "POST", "PUT", "DELETE", "PATCH"]
 });
 
 export default cors;

@@ -21,7 +21,15 @@ export interface NoPassword{
     uuid:string
 }
 
-class FbAuthRepository extends BaseClass<BaseUserData, AllUserData>{
+export interface DataToUpdate{
+    email?:string
+    phoneNumber?:string
+    username?:string
+    imageUrl?:string
+    password?:string
+}
+
+class FbAuthRepository extends BaseClass<BaseUserData, AllUserData, DataToUpdate>{
     // Base methods if need to overwrite them
     // Custom methods
     async getByEmail(email: string): Promise<AllUserData | null>{

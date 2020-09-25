@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom';
 import {Icon} from "semantic-ui-react";
 import {Profile} from "../../containers/AuthProfileContainer/reducer";
 import "./styleHeader.scss";
+import {getImageAvatar} from "../../helpers/imgHelper";
 type Props = {
-    user:Profile| {}
+    user:Profile
 }
 
 const Header: React.FC<Props> = ({user}) => {
@@ -57,10 +58,14 @@ const Header: React.FC<Props> = ({user}) => {
             <div className="auth-profile-block header-just-on-big-display">
                 {
                     Object.keys(user).length!==0
-                        ? <NavLink className="header-text" to="/my-web-site/profile"><img className="avatar-icon" src="https://i0.wp.com/crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif?fit=150%2C150&ssl=1" alt="avatar"/></NavLink>
+                        ?
+                        <NavLink className="header-text" to="/my-web-site/profile">
+                            <img className="avatar-icon" src={getImageAvatar(user.imageUrl)} alt="avatar"/>
+                        </NavLink>
                         :
                         <>
-                            <NavLink className="header-text" to="/my-web-site/login">Login </NavLink> <NavLink className="header-text" to="/my-web-site/register"> Register</NavLink>
+                            <NavLink className="header-text" to="/my-web-site/login">Login </NavLink>
+                            <NavLink className="header-text" to="/my-web-site/register"> Register</NavLink>
                         </>
                 }
             </div>

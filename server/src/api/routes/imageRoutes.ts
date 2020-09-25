@@ -15,7 +15,13 @@ router
         imageService.getImageUrl(req.file, req.user.uuid)
             .then(image => res.send({imageUrl: image.link}))
             .catch(next)
-    )// .patch("/", ((req, res, next) => ))
+    )
+    .patch("/", (req, res, next) =>
+        // @ts-ignore
+        imageService.saveImage(req.user.uuid)
+            .then(() => res.send({message:"Saved successfully"}))
+            .catch(next)
+    )
     .delete("/", (req, res, next) =>
         // @ts-ignore
         imageService.deleteImage(req.user.uuid)
