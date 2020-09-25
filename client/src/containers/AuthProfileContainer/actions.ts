@@ -1,8 +1,5 @@
-import {PUT_PROFILE} from "./actionTypes";
-import thunk, {ThunkAction} from "redux-thunk";
+import {PUT_PROFILE, PUT_IMAGE} from "./actionTypes";
 import {AxiosResponse} from "axios";
-import {Dispatch} from "redux";
-import {ActionType} from "./reducer";
 import {GetRootStateType} from "../../store";
 import {
     loginRequest,
@@ -11,8 +8,10 @@ import {
     changeUserRequest,
     deleteUserRequest,
     BaseRequestDataType,
-    ResponseDataType
+    ResponseDataType,
+    saveImage
 } from "../../service/myApiService";
+import {ProfileDispatch as Dispatch} from "./reducer";
 
 const setToken = (token:string) => localStorage.setItem("token", token);
 
@@ -20,7 +19,7 @@ type ApiFuncPostOrPut = (data:BaseRequestDataType)=>Promise<AxiosResponse<Respon
 
 type ApiFuncGet = () => Promise<AxiosResponse<ResponseDataType>>;
 
-const putUserToState = async (dispatch:Dispatch<ActionType>, apiFunction: ApiFuncPostOrPut|ApiFuncGet, userData?:BaseRequestDataType):Promise<void> => {
+const putUserToState = async (dispatch:Dispatch, apiFunction: ApiFuncPostOrPut|ApiFuncGet, userData?:BaseRequestDataType):Promise<void> => {
     // @ts-ignore
     const {data:{token, user}} = await apiFunction(userData);
     setToken(token);
@@ -30,7 +29,7 @@ const putUserToState = async (dispatch:Dispatch<ActionType>, apiFunction: ApiFun
     })
 }
 
-const deleteUserFromState = (dispatch: Dispatch<ActionType>) => {
+const deleteUserFromState = (dispatch: Dispatch) => {
     localStorage.removeItem("token");
     dispatch({
         type: PUT_PROFILE,
@@ -38,21 +37,29 @@ const deleteUserFromState = (dispatch: Dispatch<ActionType>) => {
     })
 }
 
-export const login = (userData:BaseRequestDataType) => async (dispatch:Dispatch<ActionType>) =>
+export const login = (userData:BaseRequestDataType) => async (dispatch:Dispatch) =>
     putUserToState(dispatch, loginRequest, userData);
 
-export const register = (userData:BaseRequestDataType) => async (dispatch:Dispatch<ActionType>) =>
+export const register = (userData:BaseRequestDataType) => async (dispatch:Dispatch) =>
     putUserToState(dispatch, registerRequest, userData);
 
-export const getCurrentUser = () => async (dispatch:Dispatch<ActionType>) =>
+export const getCurrentUser = () => async (dispatch:Dispatch) =>
     putUserToState(dispatch, loadCurrentUserRequest);
 
-export const change = (userData:BaseRequestDataType) => async (dispatch:Dispatch<ActionType>) =>
+export const change = (userData:BaseRequestDataType) => async (dispatch:Dispatch) =>
     putUserToState(dispatch, changeUserRequest, userData);
 
-export const signOut = () => (dispatch:Dispatch<ActionType>) => deleteUserFromState(dispatch);
+export const signOut = () => (dispatch:Dispatch) => deleteUserFromState(dispatch);
 
-export const del = (password:string) => async (dispatch:Dispatch<ActionType>, getRootState:GetRootStateType) => {
+export const del = (password:string) => async (dispatch:Dispatch, getRootState:GetRootStateType) => {
     await deleteUserRequest(getRootState().profile.uuid, password);
     deleteUserFromState(dispatch);
+};
+
+export const saveChangedImage = () => async (dispatch:Dispatch) => {
+    const {data:{imageUrl}} = await saveImage();
+    dispatch({
+        type:PUT_IMAGE,
+        payload:imageUrl
+    });
 }

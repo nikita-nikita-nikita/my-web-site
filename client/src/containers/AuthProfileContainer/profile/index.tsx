@@ -1,69 +1,110 @@
-import React, {useState} from "react";
+import React, {useState, ChangeEvent} from "react";
 import {AxiosError} from "axios";
 import {Profile} from "../reducer";
 import {connect} from "react-redux";
 import {MapStateToPropsType} from "../../../store";
 import {getImageAvatar} from "../../../helpers/imgHelper";
-import {change, signOut, del} from "../actions";
+import {change, signOut, del, saveChangedImage} from "../actions";
 import validator from "validator";
 import "../stylesProfileAuth.scss";
 import {Form, Icon} from "semantic-ui-react";
 import ifNotUndefined from "../../../helpers/ifNotUndefined";
+import {useImageServiceContext} from "../../imageService";
 
 
 type Props = {
-    user:Profile,
-    change:Function,
-    signOut:Function,
-    del:Function
+    user: Profile,
+    change: Function,
+    signOut: Function,
+    del: Function,
+    saveChangedImage: () => Promise<any>
 }
 
-const ProfileContainer:React.FunctionComponent<Props> = (
-    {user, change:changeUser, signOut:signOutUser, del:deleteUser}) => {
+
+const ProfileContainer: React.FunctionComponent<Props> = (
+    {
+        user,
+        change: changeUser,
+        signOut: signOutUser,
+        del: deleteUser,
+        saveChangedImage: saveImage
+    }) => {
+    //state
     // data
-    const [phoneNumber, setPhoneNumber] = useState<string>(user.phoneNumber ? user.phoneNumber: "+380");
-    const [username, setUsername] = useState<string>(user.username ? user.username: "");
-    const [email, setEmail] = useState<string>(user.email ? user.email: "");
-    const [newPassword, setNewPassword] = useState<string>("");
-    const [currentPassword, setCurrentPassword] = useState<string>("");
-    const [newImage, setNewImage] = useState<string>(ifNotUndefined(user.imageUrl, ""))
+    const [phoneNumber, setPhoneNumber] =
+        useState<string>(user.phoneNumber ? user.phoneNumber : "+380");
+    const [username, setUsername] =
+        useState<string>(user.username ? user.username : "");
+    const [email, setEmail] =
+        useState<string>(user.email ? user.email : "");
+    const [newPassword, setNewPassword] =
+        useState<string>("");
+    const [currentPassword, setCurrentPassword] =
+        useState<string>("");
+    const [newImage, setNewImage] =
+        useState<string>(ifNotUndefined(user.imageUrl, ""));
     //loading
-    const [isLoading, setLoading] = useState<boolean>(false);
+    const [isLoading, setLoading] =
+        useState<boolean>(false);
     // errors
-    const [phoneNumberError, setPhoneNumberError] = useState<boolean>(false);
-    const [emailError, setEmailError] = useState<boolean>(false);
-    const [newPasswordError, setNewPasswordError] = useState<boolean>(false);
+    const [phoneNumberError, setPhoneNumberError] =
+        useState<boolean>(false);
+    const [emailError, setEmailError] =
+        useState<boolean>(false);
+    const [newPasswordError, setNewPasswordError] =
+        useState<boolean>(false);
     //requestError
-    const [requestError, setRequestError] = useState<AxiosError|null>(null);
+    const [requestError, setRequestError] =
+        useState<AxiosError | null>(null);
     // display
-    const [changeProfile, setChangeProfile] = useState<boolean>(false);
-    const [changePassword, setChangePassword] = useState<boolean>(false);
+    const [changeProfile, setChangeProfile] =
+        useState<boolean>(false);
+    const [changePassword, setChangePassword] =
+        useState<boolean>(false);
+    const [isImageChanged, setIsImageChanged] =
+        useState<boolean>(false);
+    //data from context
+    const imageService = useImageServiceContext();
     //deleteChanges
     const deleteChanges = () => {
-        setPhoneNumber(user.phoneNumber ? user.phoneNumber: "+380");
-        setUsername(user.username ? user.username: "");
+        setPhoneNumber(user.phoneNumber ? user.phoneNumber : "+380");
+        setUsername(user.username ? user.username : "");
         setEmail("");
         setNewPassword("");
     }
-    //deleteErrors
+    //deleteLocalErrors
     const deleteErrors = () => {
         setPhoneNumberError(false);
         setEmailError(false);
         setNewPasswordError(false);
     }
+    //beforeRequestToServer setLoading(true) deleteRequestError
+    const beforeRequestToServer = () => {
+        setLoading(true);
+        setRequestError(null);
+    }
+
     // submit
     const submit = async () => {
         deleteErrors();
         setLoading(true);
         try {
-            await changeUser({uuid: user.uuid, email, username, newPassword, phoneNumber, currentPassword});
-        }catch (error){
+            await changeUser({
+                uuid: user.uuid,
+                email,
+                username,
+                newPassword,
+                phoneNumber,
+                currentPassword
+            });
+        } catch (error) {
             setRequestError(error);
-            console.log(error.response.data)
-        }finally {
+        } finally {
             setLoading(false);
         }
     }
+
+    //change profile info form
     const form = (
         <>
             <Form onSubmit={submit}>
@@ -72,7 +113,7 @@ const ProfileContainer:React.FunctionComponent<Props> = (
                     <p>Phone :</p>
                     <div>
                         <input
-                            className={phoneNumberError?"error":""}
+                            className={phoneNumberError ? "error" : ""}
                             type="phone"
                             placeholder="phone"
                             value={phoneNumber}
@@ -94,7 +135,7 @@ const ProfileContainer:React.FunctionComponent<Props> = (
                     </div>
                 </div>
                 <div className="form-input-container">
-                    <p>Email<span style={{color:"red"}}>*</span> :</p>
+                    <p>Email<span style={{color: "red"}}>*</span> :</p>
                     <div>
                         <input
                             type="text"
@@ -106,20 +147,20 @@ const ProfileContainer:React.FunctionComponent<Props> = (
                 </div>
                 {
                     changePassword ?
-                    <div className="form-input-container">
-                        <p>New password:</p>
-                        <div>
-                            <input
-                                type="password"
-                                placeholder="new password"
-                                value={newPassword}
-                                onChange={event => setNewPassword(event.target.value)}
-                            />
-                        </div>
-                    </div> : null
+                        <div className="form-input-container">
+                            <p>New password:</p>
+                            <div>
+                                <input
+                                    type="password"
+                                    placeholder="new password"
+                                    value={newPassword}
+                                    onChange={event => setNewPassword(event.target.value)}
+                                />
+                            </div>
+                        </div> : null
                 }
                 <div className="form-input-container">
-                    <p>Old password<span style={{color:"red"}}>*</span>(also required for user deleting) :</p>
+                    <p>Old password<span style={{color: "red"}}>*</span>(also required for user deleting) :</p>
                     <div>
                         <input
                             type="password"
@@ -135,55 +176,127 @@ const ProfileContainer:React.FunctionComponent<Props> = (
                         setChangePassword(!changePassword);
                         setNewPassword("");
                     }}>
-                        {!changePassword? "Change password" : "Do not change password"}
+                        {!changePassword ? "Change password" : "Do not change password"}
                     </button>
                     <button type="button" onClick={deleteChanges}>Delete changes</button>
-                    <button type="button" onClick={()=>deleteUser(currentPassword)}>Delete user</button>
+                    <button type="button" onClick={() => deleteUser(currentPassword)}>Delete user</button>
                 </div>
             </Form>
         </>
     );
 
-    // const getImageLink = (event) => {
-    //    todo add hoc-imageService
-    // }
+    const getImageLink = async (event: ChangeEvent<HTMLInputElement>) => {
+        beforeRequestToServer();
+        console.log("start");
+        if (!event?.target?.files) return console.log("return");
+        try {
+            const {data: {imageUrl}} =
+                await imageService.loadImageLink(event.target.files[0]);
+            setNewImage(imageUrl);
+            console.log("success");
+            setIsImageChanged(true);
+        } catch (error) {
+            setRequestError(error);
+            setIsImageChanged(true);
+        } finally {
+            setLoading(false);
+        }
+    }
 
-    return(
+    const deleteImage = () => {
+        beforeRequestToServer();
+        try {
+            imageService.deleteImageLink().then(() => {
+                setNewImage("");
+                setIsImageChanged(false);
+            });
+        }catch (e){
+            setRequestError(e);
+        }finally {
+            setLoading(false);
+        }
+    }
+
+    const saveNewImage = async () => {
+        beforeRequestToServer();
+        try {
+            await saveImage();
+        }catch (e) {
+            setRequestError(e);
+        }finally {
+            setLoading(false);
+        }
+    }
+
+    return (
         <div className="profile-container">
             <div className="static-profile-data-container">
                 <div className="avatar-container">
-                    <input name="image" type="file"/>
-                    <img src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))} alt="avatar"/>
+                    <input name="image" type="file" onChange={getImageLink}/>
+                    <img
+                        src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))}
+                        alt="avatar"/>
                     <Icon name="plus"/>
+                    {isImageChanged
+                        ?
+                        <div className="control-new-image-buttons-block">
+                            <button onClick={saveNewImage} className="save-button">
+                                <Icon name="save"/>
+                            </button>
+                            <button
+                                onClick={deleteImage}
+                                className="delete-button">
+                                <Icon name="close"/>
+                            </button>
+                        </div>
+                        : null}
                 </div>
                 <div className="user-data-container">
-                    <h2 className="profile-username">{user.username? user.username: "Enter your username downside"}</h2>
+                    <h2 className="profile-username">
+                        {user.username ? user.username : "Enter your username downside"}
+                    </h2>
                     <div>Email: {user.email}</div>
-                    <div>{user.phoneNumber ? `Phone : ${user.phoneNumber}` : "Enter your phone number downside"}</div>
-                    <button onClick={()=>signOutUser()}>Sign out</button>
+                    <div>
+                        {user.phoneNumber
+                            ? `Phone : ${user.phoneNumber}`
+                            : "Enter your phone number downside"}
+                    </div>
+                    <button onClick={() => signOutUser()}>
+                        Sign out
+                    </button>
                 </div>
             </div>
             <button onClick={() => {
                 setChangeProfile(!changeProfile);
                 setChangePassword(false);
-            }}>{!changeProfile?"Change your profile":"Do not change your profile"}</button>
+            }}>
+                {
+                    !changeProfile
+                        ? "Change your profile"
+                        : "Do not change your profile"
+                }
+            </button>
             {changeProfile ? form : null}
         </div>
     );
 }
 
 type StateFromReduxType = {
-    user:Profile
+    user: Profile
 }
 
-const mapStateToProps:MapStateToPropsType<StateFromReduxType> = state => ({
-    user:state.profile
-});
+const mapStateToProps: MapStateToPropsType<StateFromReduxType> = state =>
+    (
+        {
+            user: state.profile
+        }
+    );
 
 const mapDispatchToProps = {
     change,
     signOut,
-    del
+    del,
+    saveChangedImage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
