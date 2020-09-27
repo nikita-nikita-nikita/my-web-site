@@ -1,3 +1,4 @@
+import {Action} from "redux";
 interface defaultData {
     img:string
     id:string
@@ -44,7 +45,11 @@ const initialState:initialStateSWType = {
     list:[],
     randomObjects:{}
 }
-export default (state:initialStateSWType = initialState, action:any) => {
+
+interface ActionType extends Action{
+    payload:swList|allObjectsType
+}
+export default (state:initialStateSWType = initialState, action:ActionType) => {
     switch (action.type) {
         case "PUT_SW_LIST":
             return {

@@ -1,3 +1,4 @@
+import {Action} from "redux";
 export type linkCard = {
     avatar: string
     linkToProfile: string
@@ -6,8 +7,10 @@ export type linkCard = {
 };
 
 export type initialStateLinksType = Array<linkCard>;
-
-export default (state:initialStateLinksType = [], action:any) => {
+interface ActionType extends Action {
+    payload: Array<linkCard>;
+}
+export default (state:initialStateLinksType = [], action:ActionType) => {
     switch (action.type) {
         case "LOAD_POSTS":
             return action.payload;

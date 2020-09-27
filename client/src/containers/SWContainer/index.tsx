@@ -1,12 +1,9 @@
 import React, {useEffect} from "react";
 import "./stylesSWContainer.scss";
-//@ts-ignore
 import {connect} from "react-redux";
-//@ts-ignore
 import { Route, RouteComponentProps } from 'react-router-dom';
 //@ts-ignore
 import useInterval from 'react-useinterval';
-// @ts-ignore
 import SWSwitchPanel from "../../components/SWComponents/SWSwitchPanel";
 import RandomObjectsContainer from "../../components/SWComponents/SWRandomObjectsContainer";
 import {rootStateType} from "../../store";
@@ -27,9 +24,9 @@ type Props = {
     list: swList
     router: any
     deleteList: Function
-    planet:planet|undefined
-    starship:starship|undefined
-    person:person|undefined
+    planet:planet
+    starship:starship
+    person:person
     loadPerson: Function
     loadPlanet: Function
     loadStarship: Function
@@ -54,9 +51,11 @@ const SWContainer:React.FC<Props> = (
         planet,
         person,
         starship}) => {
+
     useEffect(()=>{
-        loadRandomObjects()
+        loadRandomObjects();
     }, [loadRandomObjects]);
+
     useInterval(()=>loadRandomObjects(), 5000);
 
     return (
@@ -101,6 +100,7 @@ const mapDispatchToProps =
         loadPerson,
         loadPlanet,
         loadStarship
-    }
+    };
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(SWContainer);

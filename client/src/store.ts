@@ -1,17 +1,17 @@
 import {
     createStore,
     applyMiddleware,
-    combineReducers
+    combineReducers,
 } from 'redux';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { connectRouter, routerMiddleware, RouterState } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from "redux-saga";
-// @ts-ignore
 import { createBrowserHistory } from 'history';
 import TechnologiesReducer, {initialStateTechnologiesType} from "../src/containers/Technologies/reducer";
 import LinksReducer, {initialStateLinksType} from "../src/containers/Links/reducer";
-import {watchLoadData} from "./containers/SWContainer/sagas";
 import SWReducer, {initialStateSWType} from "./containers/SWContainer/reducer";
+import ProfileReducer, {initialStateProfileType} from "./containers/AuthProfileContainer/reducer";
+import {watchLoadData} from "./containers/SWContainer/sagas";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 export const history = createBrowserHistory();
@@ -28,7 +28,8 @@ const middlewares = [
 const reducers = {
     technologies:TechnologiesReducer,
     links:LinksReducer,
-    starWars:SWReducer
+    starWars:SWReducer,
+    profile:ProfileReducer
 }
 
 const composedEnhancers = composeWithDevTools(
@@ -51,7 +52,11 @@ export type rootStateType = {
     technologies:initialStateTechnologiesType
     links:initialStateLinksType
     starWars:initialStateSWType
-    router:any
+    profile:initialStateProfileType
+    router:RouterState
 }
+
+export type MapStateToPropsType<T = rootStateType> = (state:rootStateType) => T;
+export type GetRootStateType = () => rootStateType;
 
 export default store;

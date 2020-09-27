@@ -1,10 +1,14 @@
 import React, {useState} from "react";
-// @ts-ignore
 import { NavLink } from 'react-router-dom';
 import {Icon} from "semantic-ui-react";
+import {Profile} from "../../containers/AuthProfileContainer/reducer";
 import "./styleHeader.scss";
+import {getImageAvatar} from "../../helpers/imgHelper";
+type Props = {
+    user:Profile
+}
 
-const Header: React.FC = () => {
+const Header: React.FC<Props> = ({user}) => {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const toggleContextMenu = () => setShowContextMenu(contextMenu => {
             return !contextMenu;
@@ -29,6 +33,7 @@ const Header: React.FC = () => {
                                         <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/links">Links</NavLink></li>
                                         <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/about">About</NavLink></li>
                                         <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/sw">Star Wars</NavLink></li>
+                                        <li className="header-text" onClick={toggleContextMenu}><NavLink className="header-text" to="/my-web-site/profile">Profile</NavLink></li>
                                     </ul>
                                 )
                                 : null
@@ -50,6 +55,20 @@ const Header: React.FC = () => {
                     </ul>
                 </div>
             </nav>
+            <div className="auth-profile-block header-just-on-big-display">
+                {
+                    Object.keys(user).length!==0
+                        ?
+                        <NavLink className="header-text" to="/my-web-site/profile">
+                            <img className="avatar-icon" src={getImageAvatar(user.imageUrl)} alt="avatar"/>
+                        </NavLink>
+                        :
+                        <>
+                            <NavLink className="header-text" to="/my-web-site/login">Login </NavLink>
+                            <NavLink className="header-text" to="/my-web-site/register"> Register</NavLink>
+                        </>
+                }
+            </div>
         </header>
     )
 };

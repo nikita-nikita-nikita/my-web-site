@@ -1,10 +1,12 @@
-import React, {useState, MouseEvent} from "react";
-// @ts-ignore
+import React, {useState, MouseEvent, useEffect} from "react";
 import {connect} from "react-redux";
 import InfoCard from "../../components/InfoCard";
 import "./stylesTechnologies.scss";
-import {initialStateTechnologiesType} from "./reducer";
+import {card} from "./reducer";
 import {rootStateType} from "../../store";
+import {loadTechnologies, deleteTechnologies} from "./actions";
+import Spinner from 'react-bootstrap/Spinner';
+
 interface actionOnPC {
     onClick(event: MouseEvent<HTMLDivElement>|any):void
 }
@@ -28,16 +30,22 @@ const toggle = (toggleCards:Function):(actionOnMobile|actionOnPC)  => (/Android|
         }
     }
 type Props = {
-    links: initialStateTechnologiesType
+    links: Array<card>
+    loadTechnologies: Function
+    deleteTechnologies: Function
 }
-const Technologies: React.FC<Props> = ({links}) => {
+const Technologies: React.FC<Props> = ({links= [], loadTechnologies, deleteTechnologies}) => {
     const [isToggled, toggleCards] = useState(false);
-    return (
+    useEffect(()=> {
+        loadTechnologies();
+        return () => deleteTechnologies();
+    }, [loadTechnologies, deleteTechnologies]);
+    return links.length ? (
         <div className="technologies-section">
             <div>
                 <div className={`info-cards${isToggled?" toggled":""}`} {...toggle(toggleCards)}>
                     <h1 className="technologies-title">Technologies</h1>
-                    {links.map(({link, title}, index) =>
+                    {links?.map(({link, title}, index) =>
                         (<InfoCard
                             key={index}
                             link={link}
@@ -46,11 +54,16 @@ const Technologies: React.FC<Props> = ({links}) => {
                 </div>
             </div>
         </div>
-    )
+    ) : <div><Spinner animation="grow" as="div"/></div>;
 };
 
 const mapStateToProps = (rootState: rootStateType) => ({
     links: rootState.technologies
 });
 
-export default connect(mapStateToProps, null)(Technologies);
+const mapDispatchToProps = {
+    loadTechnologies,
+    deleteTechnologies
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Technologies);
