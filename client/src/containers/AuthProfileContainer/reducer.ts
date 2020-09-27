@@ -22,6 +22,7 @@ export default (state:initialStateProfileType|{} = {}, action:ActionType) => {
         case "PUT_PROFILE":
             return action.payload;
         case "PUT_IMAGE":
+            console.log(action.payload);
             return {...state, imageUrl:action.payload};
         default:
             return state;

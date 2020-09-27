@@ -56,9 +56,9 @@ export const del = (password:string) => async (dispatch:Dispatch, getRootState:G
     deleteUserFromState(dispatch);
 };
 
-export const saveChangedImage = () => async (dispatch:Dispatch) => {
-    const {data:{imageUrl}} = await saveImage();
-    dispatch({
+export const saveChangedImage = (imageUrl:string) => async (dispatch:Dispatch) => {
+    const {data: {message}} = await saveImage();
+    if (message) dispatch({
         type:PUT_IMAGE,
         payload:imageUrl
     });

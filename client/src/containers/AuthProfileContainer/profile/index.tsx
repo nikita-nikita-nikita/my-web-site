@@ -17,7 +17,7 @@ type Props = {
     change: Function,
     signOut: Function,
     del: Function,
-    saveChangedImage: () => Promise<any>
+    saveChangedImage: (img:string) => Promise<any>
 }
 
 
@@ -187,13 +187,11 @@ const ProfileContainer: React.FunctionComponent<Props> = (
 
     const getImageLink = async (event: ChangeEvent<HTMLInputElement>) => {
         beforeRequestToServer();
-        console.log("start");
-        if (!event?.target?.files) return console.log("return");
+        if (!event?.target?.files) return;
         try {
             const {data: {imageUrl}} =
                 await imageService.loadImageLink(event.target.files[0]);
             setNewImage(imageUrl);
-            console.log("success");
             setIsImageChanged(true);
         } catch (error) {
             setRequestError(error);
@@ -220,7 +218,7 @@ const ProfileContainer: React.FunctionComponent<Props> = (
     const saveNewImage = async () => {
         beforeRequestToServer();
         try {
-            await saveImage();
+            await saveImage(newImage);
         }catch (e) {
             setRequestError(e);
         }finally {

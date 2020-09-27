@@ -37,6 +37,6 @@ export const deleteUserRequest = (uuid:string, password:string) =>
     myAxios.delete<ResponseDataType>(`/auth/user${uuid}`,{headers: {password}});
 
 export const saveImage = () =>
-    myAxios.patch<{imageUrl:string}>(`/img`);
+    myAxios.patch<{message:string}>(`/img`);
 
 export default myAxios;
