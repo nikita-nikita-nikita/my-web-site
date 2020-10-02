@@ -4,12 +4,6 @@ class SWApiService {
     _apiBase = "https://swapi.dev/api/";
     _imageBase = "https://starwars-visualguide.com/assets/img/";
 
-    _validIds = {
-        planets: [],
-        starships: [],
-        persons: [],
-    }
-
     getResource = async (url:string) =>{
         const res = await axios.get(`${this._apiBase}${url}`);
         if (res.statusText!=="OK"&&res.statusText!=="") throw new Error(`Could not fetch status: ${res.status}`);

@@ -29,7 +29,10 @@ passport.use(
 
 passport.use(
     "change",
-    new LocalStrategy({passReqToCallback:true, passwordField:"currentPassword", usernameField:"email"},
+    new LocalStrategy({
+            passReqToCallback:true,
+            passwordField:"currentPassword",
+            usernameField:"email"},
         async ({body}, email, password, done)=>{
             try {
                 const userById = await fbAuthRepository.getById(body.uuid);
@@ -73,10 +76,8 @@ passport.use(
 
 passport.use(
     "register",
-    new LocalStrategy({usernameField:"email"}, async (email, password, done)=>{
+     new LocalStrategy({usernameField:"email"}, async (email, password, done)=>{
         try {
-            if(!email||!password)
-                return done({ status: 401, message: 'Password and email are required.' }, null);
             if(!validator.isEmail(email)||password.length<6)
                 return done(
                     {

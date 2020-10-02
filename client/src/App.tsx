@@ -1,6 +1,5 @@
 import React from "react";
 import './App.scss';
-// @ts-ignore
 import { Provider } from 'react-redux';
 import {ConnectedRouter} from "connected-react-router";
 import Routing from "./containers/Routing"
