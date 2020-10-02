@@ -1,9 +1,9 @@
 import admin, {ServiceAccount} from "firebase-admin";
-import serviceAccount from "./nikita-bludov-web-site-firebase-adminsdk.json";
+import env from "../env";
 
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount as ServiceAccount),
+    credential: admin.credential.cert(env.fb as ServiceAccount),
     databaseURL: "https://nikita-bludov-web-site.firebaseio.com"
 });
 export type FirestoreCollectionReference = admin.firestore.CollectionReference;
