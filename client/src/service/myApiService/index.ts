@@ -2,7 +2,11 @@ import axios from 'axios';
 import {card} from "../../containers/Technologies/reducer";
 import {Profile} from "../../containers/AuthProfileContainer/reducer";
 
-const myApiServiceBaseUrl = "http://localhost:8080/api";
+const mode = "prod";
+
+// @ts-ignore
+const myApiServiceBaseUrl = (mode === "dev") ? "http://localhost:8080/api" : "https://my-web-site-back.herokuapp.com/api";
+
 export type BaseRequestDataType = {
     email:string
     password:string
