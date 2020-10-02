@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e7f34a3081a5ee7cfe1361fec890c8cc",
+    "revision": "8fec5f71868ffd38cd632ecd5dad1772",
     "url": "/my-web-site/index.html"
   },
   {
-    "revision": "a37a24a198101f187c83",
-    "url": "/my-web-site/static/css/2.451311b4.chunk.css"
+    "revision": "bf04e80a04e4f7a077f0",
+    "url": "/my-web-site/static/css/2.ece0bc7d.chunk.css"
   },
   {
-    "revision": "629335e77bbda52c17a8",
-    "url": "/my-web-site/static/css/main.5b102cfc.chunk.css"
+    "revision": "a68c606df20d2ef87036",
+    "url": "/my-web-site/static/css/main.34738564.chunk.css"
   },
   {
-    "revision": "a37a24a198101f187c83",
-    "url": "/my-web-site/static/js/2.2ea45279.chunk.js"
+    "revision": "bf04e80a04e4f7a077f0",
+    "url": "/my-web-site/static/js/2.b59f92d7.chunk.js"
   },
   {
     "revision": "4d47ffde3dc69784e8e23fd910817ef8",
-    "url": "/my-web-site/static/js/2.2ea45279.chunk.js.LICENSE.txt"
+    "url": "/my-web-site/static/js/2.b59f92d7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "629335e77bbda52c17a8",
-    "url": "/my-web-site/static/js/main.4f836f19.chunk.js"
+    "revision": "a68c606df20d2ef87036",
+    "url": "/my-web-site/static/js/main.0214e6b9.chunk.js"
   },
   {
     "revision": "cd358cca0aa50b05ee20",
@@ -74,6 +74,22 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "3643d8ed3f075e90d107dbd3224addae",
     "url": "/my-web-site/static/media/me.3643d8ed.jpg"
+  },
+  {
+    "revision": "0b4ac1dc75df35e169b70d7719afe4cc",
+    "url": "/my-web-site/static/media/notification.0b4ac1dc.ttf"
+  },
+  {
+    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
+    "url": "/my-web-site/static/media/notification.5bee74ca.svg"
+  },
+  {
+    "revision": "651771e1df95c807c99608188d0a4287",
+    "url": "/my-web-site/static/media/notification.651771e1.woff"
+  },
+  {
+    "revision": "c0d3c94cd6112550c51d7d1ed13b9da1",
+    "url": "/my-web-site/static/media/notification.c0d3c94c.eot"
   },
   {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
