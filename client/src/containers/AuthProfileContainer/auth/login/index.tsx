@@ -1,30 +1,30 @@
 import React, { useState } from "react";
 import {connect} from "react-redux";
 import {Segment, Form, Button} from "semantic-ui-react";
-import {AxiosError} from "axios";
 import isEmail from 'validator/lib/isEmail';
 import {login} from "../../actions";
+import {setInfo, setError} from "../../../Notifications/actions";
 
 type Props = {
     login:Function
+    setError:Function
+    setInfo:Function
 }
 
-const LoginForm:React.FunctionComponent<Props> = ({login:loginUser}) => {
+const LoginForm:React.FunctionComponent<Props> = ({login:loginUser, setInfo, setError}) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [isLoading, setLoading] = useState<boolean>(false);
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
     const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
-    const [error, setError] = useState<AxiosError|null>(null);
     const submit = async () => {
-        const isValid = isEmailValid&&isPasswordValid;
-        if(!isValid||isLoading) return;
+        if(!isEmailValid) setError("Invalid email");
         setLoading(true);
-        setError(null);
         try {
             await loginUser({email, password})
+            setInfo("Welcome");
         }catch (e){
-            setError(e);
+            setError(e.response.data.message);
         }finally {
             setLoading(false);
         }
@@ -52,11 +52,6 @@ const LoginForm:React.FunctionComponent<Props> = ({login:loginUser}) => {
                     onChange={ev => setPassword(ev.target.value)}
                     onBlur={() => setIsPasswordValid(Boolean(password.length>=6))}
                 />
-                {
-                    error
-                        ? <p className="error">{error.response?.data.message}</p>
-                        : null
-                }
                 <Button type="submit" color="teal" fluid size="large" loading={isLoading} primary>
                     Login
                 </Button>
@@ -66,7 +61,7 @@ const LoginForm:React.FunctionComponent<Props> = ({login:loginUser}) => {
 }
 
 const mapDispatchToProps = {
-    login
+    login, setError, setInfo
 }
 
 export default connect(null, mapDispatchToProps)(LoginForm);

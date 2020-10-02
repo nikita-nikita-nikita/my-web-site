@@ -10,14 +10,16 @@ export type Profile = {
 }
 
 export interface ActionType extends Action<string>{
-    payload:Profile|{}
+    payload:Profile|string|{}
 }
 
-export type ProfileDispatch = Dispatch<ActionType>
+export type ProfileDispatch = Dispatch<ActionType>;
 
 export type initialStateProfileType = Profile;
 
-export default (state:initialStateProfileType|{} = {}, action:ActionType) => {
+export default (
+    state:initialStateProfileType|{} = {},
+    action:ActionType) => {
     switch (action.type){
         case "PUT_PROFILE":
             return action.payload;

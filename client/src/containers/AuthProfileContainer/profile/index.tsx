@@ -1,5 +1,4 @@
 import React, {useState, ChangeEvent} from "react";
-import {AxiosError} from "axios";
 import {Profile} from "../reducer";
 import {connect} from "react-redux";
 import {MapStateToPropsType} from "../../../store";
@@ -10,6 +9,7 @@ import "../stylesProfileAuth.scss";
 import {Form, Icon} from "semantic-ui-react";
 import ifNotUndefined from "../../../helpers/ifNotUndefined";
 import {useImageServiceContext} from "../../imageService";
+import {setError, setInfo} from "../../Notifications/actions";
 
 
 type Props = {
@@ -17,7 +17,9 @@ type Props = {
     change: Function,
     signOut: Function,
     del: Function,
-    saveChangedImage: (img:string) => Promise<any>
+    saveChangedImage: (img:string) => Promise<any>,
+    setError:Function,
+    setInfo:Function
 }
 
 
@@ -27,7 +29,9 @@ const ProfileContainer: React.FunctionComponent<Props> = (
         change: changeUser,
         signOut: signOutUser,
         del: deleteUser,
-        saveChangedImage: saveImage
+        saveChangedImage: saveImage,
+        setError,
+        setInfo
     }) => {
     //state
     // data
@@ -53,9 +57,6 @@ const ProfileContainer: React.FunctionComponent<Props> = (
         useState<boolean>(false);
     const [newPasswordError, setNewPasswordError] =
         useState<boolean>(false);
-    //requestError
-    const [requestError, setRequestError] =
-        useState<AxiosError | null>(null);
     // display
     const [changeProfile, setChangeProfile] =
         useState<boolean>(false);
@@ -81,13 +82,13 @@ const ProfileContainer: React.FunctionComponent<Props> = (
     //beforeRequestToServer setLoading(true) deleteRequestError
     const beforeRequestToServer = () => {
         setLoading(true);
-        setRequestError(null);
     }
 
     // submit
     const submit = async () => {
-        deleteErrors();
         setLoading(true);
+        if(emailError || (newPasswordError&&newPasswordError) || (phoneNumberError&&phoneNumber)) return setError("some field invalid");
+        deleteErrors();
         try {
             await changeUser({
                 uuid: user.uuid,
@@ -97,8 +98,9 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                 phoneNumber,
                 currentPassword
             });
+            setInfo("Successfully changed");
         } catch (error) {
-            setRequestError(error);
+            setError(error.response.data.message);
         } finally {
             setLoading(false);
         }
@@ -118,7 +120,9 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                             placeholder="phone"
                             value={phoneNumber}
                             onChange={event => setPhoneNumber(event.target.value)}
-                            onBlur={() => setPhoneNumberError(!validator.isMobilePhone(phoneNumber))}
+                            onBlur={
+                                () => setPhoneNumberError(Boolean(!validator.isMobilePhone(phoneNumber)&&phoneNumber))
+                            }
                         />
                     </div>
 
@@ -138,10 +142,14 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                     <p>Email<span style={{color: "red"}}>*</span> :</p>
                     <div>
                         <input
+                            className={emailError ? "error" : ""}
                             type="text"
                             placeholder="email"
                             value={email}
                             onChange={event => setEmail(event.target.value)}
+                            onBlur={
+                                () => setEmailError(Boolean(!validator.isEmail(email)))
+                            }
                         />
                     </div>
                 </div>
@@ -151,6 +159,7 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                             <p>New password:</p>
                             <div>
                                 <input
+                                    className={newPasswordError ? "error" : ""}
                                     type="password"
                                     placeholder="new password"
                                     value={newPassword}
@@ -160,7 +169,11 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                         </div> : null
                 }
                 <div className="form-input-container">
-                    <p>Old password<span style={{color: "red"}}>*</span>(also required for user deleting) :</p>
+                    <p>
+                        Old password
+                        <span style={{color: "red"}}>*</span>
+                        (also required for user deleting) :
+                    </p>
                     <div>
                         <input
                             type="password"
@@ -179,7 +192,9 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                         {!changePassword ? "Change password" : "Do not change password"}
                     </button>
                     <button type="button" onClick={deleteChanges}>Delete changes</button>
-                    <button type="button" onClick={() => deleteUser(currentPassword)}>Delete user</button>
+                    <button type="button" onClick={
+                        () => deleteUser(currentPassword)
+                    }>Delete user</button>
                 </div>
             </Form>
         </>
@@ -189,27 +204,24 @@ const ProfileContainer: React.FunctionComponent<Props> = (
         beforeRequestToServer();
         if (!event?.target?.files) return;
         try {
-            const {data: {imageUrl}} =
-                await imageService.loadImageLink(event.target.files[0]);
+            const {data: {imageUrl}} = await imageService.loadImageLink(event.target.files[0]);
             setNewImage(imageUrl);
             setIsImageChanged(true);
         } catch (error) {
-            setRequestError(error);
-            setIsImageChanged(true);
+            setError(error.response.data.message);
         } finally {
             setLoading(false);
         }
     }
 
-    const deleteImage = () => {
+    const deleteImage = async () => {
         beforeRequestToServer();
         try {
-            imageService.deleteImageLink().then(() => {
-                setNewImage("");
-                setIsImageChanged(false);
-            });
-        }catch (e){
-            setRequestError(e);
+            await imageService.deleteImageLink();
+            setNewImage("");
+            setIsImageChanged(false);
+        }catch (error){
+            setError(error.response.data.message);
         }finally {
             setLoading(false);
         }
@@ -217,10 +229,13 @@ const ProfileContainer: React.FunctionComponent<Props> = (
 
     const saveNewImage = async () => {
         beforeRequestToServer();
+        setLoading(true);
         try {
             await saveImage(newImage);
-        }catch (e) {
-            setRequestError(e);
+            setIsImageChanged(false);
+            setInfo("Successfully saved");
+        }catch (error) {
+            setError(error.response.data.message);
         }finally {
             setLoading(false);
         }
@@ -230,7 +245,7 @@ const ProfileContainer: React.FunctionComponent<Props> = (
         <div className="profile-container">
             <div className="static-profile-data-container">
                 <div className="avatar-container">
-                    <input name="image" type="file" onChange={getImageLink}/>
+                    <input name="image" type="file" onChange={getImageLink}  accept="image/*"/>
                     <img
                         src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))}
                         alt="avatar"/>
@@ -247,7 +262,8 @@ const ProfileContainer: React.FunctionComponent<Props> = (
                                 <Icon name="close"/>
                             </button>
                         </div>
-                        : null}
+                        : null
+                    }
                 </div>
                 <div className="user-data-container">
                     <h2 className="profile-username">
@@ -294,7 +310,9 @@ const mapDispatchToProps = {
     change,
     signOut,
     del,
-    saveChangedImage
+    saveChangedImage,
+    setError,
+    setInfo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

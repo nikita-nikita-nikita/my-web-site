@@ -26,7 +26,7 @@ const AboutPage = () => (
                     <li>2005-2008 Kindergarten</li>
                     <li>2008-2015 School № 96</li>
                     <li>2015-2019 Lyceum № 142</li>
-                    <li>2015-Nowadays Igor Sikorsky Kiev Polytechnic Institute</li>
+                    <li>2019-Nowadays Igor Sikorsky Kiev Polytechnic Institute</li>
                 </BeautifulList>
                 <BeautifulList title="Hobby" style={{width:'33%'}}>
                     <li>Programming</li>

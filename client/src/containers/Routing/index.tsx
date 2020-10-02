@@ -18,6 +18,7 @@ import Footer from "../../components/Footer";
 import RedirectToHome from "../../components/RedirectToHome";
 import ProfilePage from "../../pages/ProfilePage";
 import {Profile} from "../AuthProfileContainer/reducer";
+import Notifications from "../Notifications";
 
 type Props = {
     user:Profile
@@ -44,6 +45,7 @@ const Routing: React.FC<Props> = ({user, getCurrentUser}) => {
                 <Route path="*" exact component={NotFound}/>
             </Switch>
             <Footer/>
+            <Notifications/>
         </>
     )
 }

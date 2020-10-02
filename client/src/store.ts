@@ -11,6 +11,7 @@ import TechnologiesReducer, {initialStateTechnologiesType} from "../src/containe
 import LinksReducer, {initialStateLinksType} from "../src/containers/Links/reducer";
 import SWReducer, {initialStateSWType} from "./containers/SWContainer/reducer";
 import ProfileReducer, {initialStateProfileType} from "./containers/AuthProfileContainer/reducer";
+import NotificationReducer, {initialStateNotificationType} from "./containers/Notifications/reducer";
 import {watchLoadData} from "./containers/SWContainer/sagas";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -29,7 +30,8 @@ const reducers = {
     technologies:TechnologiesReducer,
     links:LinksReducer,
     starWars:SWReducer,
-    profile:ProfileReducer
+    profile:ProfileReducer,
+    notification:NotificationReducer
 }
 
 const composedEnhancers = composeWithDevTools(
@@ -44,7 +46,7 @@ const rootReducer = combineReducers({
 const store = createStore(
     rootReducer,
     initialState,
-    composedEnhancers
+    composedEnhancers,
 );
 sagaMiddleware.run(watchLoadData);
 
@@ -54,6 +56,7 @@ export type rootStateType = {
     starWars:initialStateSWType
     profile:initialStateProfileType
     router:RouterState
+    notification:initialStateNotificationType
 }
 
 export type MapStateToPropsType<T = rootStateType> = (state:rootStateType) => T;
