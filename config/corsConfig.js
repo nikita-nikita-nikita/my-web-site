@@ -8,6 +8,7 @@ const env_1 = __importDefault(require("../env"));
 const whitelist = env_1.default.app.corsWhitelist;
 const cors = cors_1.default({
     origin(origin, callback) {
+        console.log(origin);
         if (whitelist.indexOf(origin) !== -1)
             callback(null, true);
         else
