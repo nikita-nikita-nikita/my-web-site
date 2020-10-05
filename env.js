@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-if (process.env.NODE_ENV !== 'production') {
-    // @ts-ignore
-    import dotenv from 'dotenv';
-    dotenv_1.default.config();
-}
+// @ts-ignore
+// tslint:disable-next-line:no-var-requires
+if (process.env.NODE_ENV !== 'production')
+    require("dotenv").config();
 const env = {
     app: {
         port: process.env.APP_PORT,
