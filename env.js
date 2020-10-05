@@ -4,11 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+const result = dotenv_1.default.config();
+if (result.error) {
+    throw result.error;
+}
+console.log(result.parsed);
+console.log(process.env.APP_CORS_WHITELIST);
 const env = {
     app: {
         port: process.env.APP_PORT,
-        corsWhitelist: process.env.APP_CORS_WHITELIST.split(' ')
+        corsWhitelist: process.env.APP_CORS_WHITELIST
     },
     jwt: {
         secret: process.env.APP_SECRET
@@ -30,5 +35,6 @@ const env = {
         client_x509_cert_url: process.env.FB_CLIENT_X509_CERT_URL
     }
 };
+console.log("env", env);
 exports.default = env;
 //# sourceMappingURL=env.js.map
