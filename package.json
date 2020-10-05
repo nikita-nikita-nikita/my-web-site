@@ -11,7 +11,7 @@
     "build": "npm-run-all clean lint tsc copy-assets",
     "dev:start": "npm-run-all build start",
     "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
-    "start": "node .",
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist -b heroku-branch"
