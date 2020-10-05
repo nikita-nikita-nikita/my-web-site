@@ -17,6 +17,7 @@ const app = express_1.default();
 const port = env_1.default.app.port || 8080;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+app.use((req, res, next) => { console.log(req.header("Origin")); next(); });
 app.use(corsConfig_1.default);
 app.use(passport_1.default.initialize());
 app.use("/api/", authorizationMiddleware_1.default(routesWhitelist_1.default));
@@ -24,6 +25,6 @@ index_1.default(app);
 app.use(errorHandlerMiddleware_1.default);
 app.listen(port, () => {
     // tslint:disable-next-line:no-console
-    console.log(`server started at http://localhost:${port}`);
+    console.log(`server started at port ${port}`);
 });
 //# sourceMappingURL=server.js.map
