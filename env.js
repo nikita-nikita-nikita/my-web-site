@@ -1,10 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// @ts-ignore
 // tslint:disable-next-line:no-var-requires
 if (process.env.NODE_ENV !== 'production')
     require("dotenv").config();
-// @ts-ignore
 const env = {
     app: {
         port: process.env.PORT,
@@ -31,6 +29,5 @@ const env = {
         client_x509_cert_url: process.env.FB_CLIENT_X509_CERT_URL
     }
 };
-console.log("env", env);
 exports.default = env;
 //# sourceMappingURL=env.js.map

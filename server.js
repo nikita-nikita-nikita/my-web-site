@@ -17,8 +17,6 @@ const app = express_1.default();
 const port = env_1.default.app.port || 8080;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use((req, res, next) => { console.log("Request"); next(); });
-app.use((req, res, next) => { console.log(req.header("Origin")); next(); });
 app.use(corsConfig_1.default);
 app.use(passport_1.default.initialize());
 app.use("/api/", authorizationMiddleware_1.default(routesWhitelist_1.default));

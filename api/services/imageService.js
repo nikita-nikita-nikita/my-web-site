@@ -57,6 +57,5 @@ exports.saveImage = (uuid) => __awaiter(void 0, void 0, void 0, function* () {
     yield fbAuthRepository_1.default.update(uuid, { imageUrl: image.link });
     yield imgurService.deleteFromImgur(image.deleteHash);
     yield fbImageRepository_1.default.delete(uuid);
-    console.log("finish");
 });
 //# sourceMappingURL=imageService.js.map

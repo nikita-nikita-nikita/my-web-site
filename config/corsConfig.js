@@ -6,9 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
 const env_1 = __importDefault(require("../env"));
 const whitelist = env_1.default.app.corsWhitelist;
-exports.default = cors_1.default({
+const cors = cors_1.default({
     origin(origin, callback) {
-        console.log("Coooors", origin);
         if (whitelist.indexOf(origin) !== -1)
             callback(null, true);
         else
@@ -16,4 +15,5 @@ exports.default = cors_1.default({
     },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
 });
+exports.default = cors;
 //# sourceMappingURL=corsConfig.js.map
