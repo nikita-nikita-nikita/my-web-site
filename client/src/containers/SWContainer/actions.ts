@@ -9,6 +9,7 @@ import {
     PUT_SW_CHARACTER
 } from "./actionTypes";
 
+//  eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {allObjectsType, swList, person, planet, starship} from "./reducer";
 
 export const loadList = (template:string) => () => ({

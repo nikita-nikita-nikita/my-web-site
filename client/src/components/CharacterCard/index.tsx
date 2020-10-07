@@ -16,7 +16,14 @@ interface Props {
 const CharacterCard: React.FC<Props> = ({imgLink, children, fullScreenCardClass, isRandomObject, isStarWars, isVertical, isInsideContainer})=> {
     return(
         <div className=
-                 {`character-card`+`${fullScreenCardClass ? ' full-screen-character-card' : ''}${isRandomObject ? ' random-object' : ''}${isVertical ? ' vertical' : ''}${isInsideContainer?' inside-container': ''}${isStarWars? ' sw-card-color': ''}`}>
+                 {
+                     `character-card`+
+                     `${fullScreenCardClass ? ' full-screen-character-card' : ''}` +
+                     `${isRandomObject ? ' random-object' : ''}` +
+                     `${isVertical ? ' vertical' : ''}` +
+                     `${isInsideContainer?' inside-container': ''}` +
+                     `${isStarWars? ' sw-card-color': ''}`
+                 }>
             <img src={imgLink} className="character-img" alt="avatar"/>
             <ul className="stats">
                 {children}

@@ -3,9 +3,9 @@ import "./stylesAbout.scss";
 import CharacterCard from "../../components/CharacterCard";
 import img from "../../images/me.jpg";
 import BeautifulList from "../../components/BeautifulList";
-const me:any = {
+const me = {
     name: 'Nikita',
-    age: 17,
+    age: (new Date()).getFullYear() - (new Date("2002-09-29")).getFullYear(),
     gender: 'male',
     eyeColor: 'blue'
 }

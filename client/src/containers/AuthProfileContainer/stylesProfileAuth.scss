@@ -93,9 +93,9 @@
 
   .static-profile-data-container {
     font-size: 1.2em;
-    width: 60%;
     display: flex;
     padding: 30px;
+    align-items: center;
   }
 
 
@@ -178,6 +178,12 @@
     }
   }
 
+  .user-data-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .profile-username {
     text-align: center;
     margin: 5px;
@@ -199,6 +205,12 @@
     color: white;
     font-size: 1.4em;
   }
+}
 
-
+@media screen and (max-width: 700px){
+  .profile-container{
+    .static-profile-data-container{
+      flex-direction: column;
+    }
+  }
 }

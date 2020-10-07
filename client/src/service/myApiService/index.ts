@@ -5,7 +5,9 @@ import {Profile} from "../../containers/AuthProfileContainer/reducer";
 const mode = "prod";
 
 // @ts-ignore
-const myApiServiceBaseUrl = (mode === "dev") ? "http://localhost:8080/api" : "https://my-web-site-back.herokuapp.com/api";
+const myApiServiceBaseUrl = (mode === "dev")
+    ? "http://localhost:8080/api"
+    : "https://my-web-site-back.herokuapp.com/api";
 
 export type BaseRequestDataType = {
     email:string

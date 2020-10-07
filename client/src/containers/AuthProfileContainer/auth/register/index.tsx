@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {AxiosError} from 'axios';
 import {Segment, Form, Button} from "semantic-ui-react";
 import {register} from "../../actions";
 import isEmail from 'validator/lib/isEmail';

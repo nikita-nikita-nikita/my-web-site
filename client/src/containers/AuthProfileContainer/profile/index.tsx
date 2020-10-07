@@ -10,6 +10,7 @@ import {Form, Icon} from "semantic-ui-react";
 import ifNotUndefined from "../../../helpers/ifNotUndefined";
 import {useImageServiceContext} from "../../imageService";
 import {setError, setInfo} from "../../Notifications/actions";
+import Spinner from "../../../components/Spinner";
 
 
 type Props = {
@@ -17,9 +18,9 @@ type Props = {
     change: Function,
     signOut: Function,
     del: Function,
-    saveChangedImage: (img:string) => Promise<any>,
-    setError:Function,
-    setInfo:Function
+    saveChangedImage: (img: string) => Promise<any>,
+    setError: Function,
+    setInfo: Function
 }
 
 
@@ -86,10 +87,14 @@ const ProfileContainer: React.FunctionComponent<Props> = (
 
     // submit
     const submit = async () => {
-        setLoading(true);
-        if(emailError || (newPasswordError&&newPasswordError) || (phoneNumberError&&phoneNumber)) return setError("some field invalid");
+        if (emailError
+            || (newPasswordError && newPasswordError)
+            || (phoneNumberError && phoneNumber)
+            || isLoading)
+            return setError("some field invalid");
         deleteErrors();
         try {
+            beforeRequestToServer();
             await changeUser({
                 uuid: user.uuid,
                 email,
@@ -108,102 +113,102 @@ const ProfileContainer: React.FunctionComponent<Props> = (
 
     //change profile info form
     const form = (
-        <>
-            <Form onSubmit={submit}>
-                <p className="important">If you do not want to change some field just do not touch it</p>
-                <div className="form-input-container">
-                    <p>Phone :</p>
-                    <div>
-                        <input
-                            className={phoneNumberError ? "error" : ""}
-                            type="phone"
-                            placeholder="phone"
-                            value={phoneNumber}
-                            onChange={event => setPhoneNumber(event.target.value)}
-                            onBlur={
-                                () => setPhoneNumberError(Boolean(!validator.isMobilePhone(phoneNumber)&&phoneNumber))
-                            }
-                        />
-                    </div>
+        <Form onSubmit={submit}>
+            <p className="important">If you do not want to change some field just do not touch it</p>
+            <div className="form-input-container">
+                <p>Phone :</p>
+                <div>
+                    <input
+                        className={phoneNumberError ? "error" : ""}
+                        type="phone"
+                        placeholder="phone"
+                        value={phoneNumber}
+                        onChange={event => setPhoneNumber(event.target.value)}
+                        onBlur={
+                            () => setPhoneNumberError(Boolean(!validator.isMobilePhone(phoneNumber) && phoneNumber))
+                        }
+                    />
+                </div>
 
+            </div>
+            <div className="form-input-container">
+                <p>Username :</p>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="username"
+                        value={username}
+                        onChange={event => setUsername(event.target.value)}
+                    />
                 </div>
-                <div className="form-input-container">
-                    <p>Username :</p>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="username"
-                            value={username}
-                            onChange={event => setUsername(event.target.value)}
-                        />
-                    </div>
+            </div>
+            <div className="form-input-container">
+                <p>Email<span style={{color: "red"}}>*</span> :</p>
+                <div>
+                    <input
+                        className={emailError ? "error" : ""}
+                        type="text"
+                        placeholder="email"
+                        value={email}
+                        onChange={event => setEmail(event.target.value)}
+                        onBlur={
+                            () => setEmailError(Boolean(!validator.isEmail(email)))
+                        }
+                    />
                 </div>
-                <div className="form-input-container">
-                    <p>Email<span style={{color: "red"}}>*</span> :</p>
-                    <div>
-                        <input
-                            className={emailError ? "error" : ""}
-                            type="text"
-                            placeholder="email"
-                            value={email}
-                            onChange={event => setEmail(event.target.value)}
-                            onBlur={
-                                () => setEmailError(Boolean(!validator.isEmail(email)))
-                            }
-                        />
-                    </div>
+            </div>
+            {
+                changePassword ?
+                    <div className="form-input-container">
+                        <p>New password:</p>
+                        <div>
+                            <input
+                                className={newPasswordError ? "error" : ""}
+                                type="password"
+                                placeholder="new password"
+                                value={newPassword}
+                                onChange={event => setNewPassword(event.target.value)}
+                            />
+                        </div>
+                    </div> : null
+            }
+            <div className="form-input-container">
+                <p>
+                    Old password
+                    <span style={{color: "red"}}>*</span>
+                    (also required for user deleting) :
+                </p>
+                <div>
+                    <input
+                        type="password"
+                        placeholder="current password"
+                        value={currentPassword}
+                        onChange={event => setCurrentPassword(event.target.value)}
+                    />
                 </div>
-                {
-                    changePassword ?
-                        <div className="form-input-container">
-                            <p>New password:</p>
-                            <div>
-                                <input
-                                    className={newPasswordError ? "error" : ""}
-                                    type="password"
-                                    placeholder="new password"
-                                    value={newPassword}
-                                    onChange={event => setNewPassword(event.target.value)}
-                                />
-                            </div>
-                        </div> : null
-                }
-                <div className="form-input-container">
-                    <p>
-                        Old password
-                        <span style={{color: "red"}}>*</span>
-                        (also required for user deleting) :
-                    </p>
-                    <div>
-                        <input
-                            type="password"
-                            placeholder="current password"
-                            value={currentPassword}
-                            onChange={event => setCurrentPassword(event.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="buttons-block">
-                    <button type="submit">Save changes</button>
-                    <button type="button" onClick={() => {
-                        setChangePassword(!changePassword);
-                        setNewPassword("");
-                    }}>
-                        {!changePassword ? "Change password" : "Do not change password"}
-                    </button>
-                    <button type="button" onClick={deleteChanges}>Delete changes</button>
-                    <button type="button" onClick={
-                        () => deleteUser(currentPassword)
-                    }>Delete user</button>
-                </div>
-            </Form>
-        </>
+            </div>
+            <div className="buttons-block">
+                <button type="submit">Save changes</button>
+                <button type="button" onClick={() => {
+                    setChangePassword(!changePassword);
+                    setNewPassword("");
+                }}>
+                    {!changePassword ? "Change password" : "Do not change password"}
+                </button>
+                <button type="button" onClick={deleteChanges}>Delete changes</button>
+                <button type="button" onClick={
+                    () => deleteUser(currentPassword)
+                }>Delete user
+                </button>
+            </div>
+        </Form>
     );
 
     const getImageLink = async (event: ChangeEvent<HTMLInputElement>) => {
-        beforeRequestToServer();
+        if (isLoading) return;
         if (!event?.target?.files) return;
         try {
+            beforeRequestToServer();
             const {data: {imageUrl}} = await imageService.loadImageLink(event.target.files[0]);
             setNewImage(imageUrl);
             setIsImageChanged(true);
@@ -215,83 +220,87 @@ const ProfileContainer: React.FunctionComponent<Props> = (
     }
 
     const deleteImage = async () => {
-        beforeRequestToServer();
+        if (isLoading) return;
         try {
+            beforeRequestToServer();
             await imageService.deleteImageLink();
             setNewImage("");
             setIsImageChanged(false);
-        }catch (error){
+        } catch (error) {
             setError(error.response.data.message);
-        }finally {
+        } finally {
             setLoading(false);
         }
     }
 
     const saveNewImage = async () => {
-        beforeRequestToServer();
-        setLoading(true);
+        if(isLoading) return;
         try {
+            beforeRequestToServer();
             await saveImage(newImage);
             setIsImageChanged(false);
             setInfo("Successfully saved");
-        }catch (error) {
+        } catch (error) {
             setError(error.response.data.message);
-        }finally {
+        } finally {
             setLoading(false);
         }
     }
 
     return (
-        <div className="profile-container">
-            <div className="static-profile-data-container">
-                <div className="avatar-container">
-                    <input name="image" type="file" onChange={getImageLink}  accept="image/*"/>
-                    <img
-                        src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))}
-                        alt="avatar"/>
-                    <Icon name="plus"/>
-                    {isImageChanged
-                        ?
-                        <div className="control-new-image-buttons-block">
-                            <button onClick={saveNewImage} className="save-button">
-                                <Icon name="save"/>
-                            </button>
-                            <button
-                                onClick={deleteImage}
-                                className="delete-button">
-                                <Icon name="close"/>
-                            </button>
-                        </div>
-                        : null
-                    }
-                </div>
-                <div className="user-data-container">
-                    <h2 className="profile-username">
-                        {user.username ? user.username : "Enter your username downside"}
-                    </h2>
-                    <div>Email: {user.email}</div>
-                    <div>
-                        {user.phoneNumber
-                            ? `Phone : ${user.phoneNumber}`
-                            : "Enter your phone number downside"}
+        <>
+            <div className="profile-container">
+                <div className="static-profile-data-container">
+                    <div className="avatar-container">
+                        <input name="image" type="file" onChange={getImageLink} accept="image/*"/>
+                        <img
+                            src={ifNotUndefined(newImage, getImageAvatar(user.imageUrl))}
+                            alt="avatar"/>
+                        <Icon name="plus"/>
+                        {isImageChanged
+                            ?
+                            <div className="control-new-image-buttons-block">
+                                <button onClick={saveNewImage} className="save-button">
+                                    <Icon name="save"/>
+                                </button>
+                                <button
+                                    onClick={deleteImage}
+                                    className="delete-button">
+                                    <Icon name="close"/>
+                                </button>
+                            </div>
+                            : null
+                        }
                     </div>
-                    <button onClick={() => signOutUser()}>
-                        Sign out
-                    </button>
+                    <div className="user-data-container">
+                        <h2 className="profile-username">
+                            {user.username ? user.username : "Enter your username downside"}
+                        </h2>
+                        <div>Email: {user.email}</div>
+                        <div>
+                            {user.phoneNumber
+                                ? `Phone : ${user.phoneNumber}`
+                                : "Enter your phone number downside"}
+                        </div>
+                        <button onClick={() => signOutUser()}>
+                            Sign out
+                        </button>
+                    </div>
                 </div>
+                <button onClick={() => {
+                    setChangeProfile(!changeProfile);
+                    setChangePassword(false);
+                }}>
+                    {
+                        !changeProfile
+                            ? "Change your profile"
+                            : "Do not change your profile"
+                    }
+                </button>
+                {changeProfile ? form : null}
             </div>
-            <button onClick={() => {
-                setChangeProfile(!changeProfile);
-                setChangePassword(false);
-            }}>
-                {
-                    !changeProfile
-                        ? "Change your profile"
-                        : "Do not change your profile"
-                }
-            </button>
-            {changeProfile ? form : null}
-        </div>
+            {isLoading ? <Spinner/> : null}
+        </>
     );
 }
 

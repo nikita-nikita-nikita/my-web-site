@@ -4,7 +4,7 @@ import {Icon} from "semantic-ui-react";
 
 interface Props {
     title: string,
-    children: string
+    children: any
 }
 
 const ModalWindow: React.FC<Props> = ({title, children}) => {

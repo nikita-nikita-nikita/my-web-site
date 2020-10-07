@@ -22,5 +22,4 @@ export const saveImage = async (uuid:string) => {
     await fbAuthRepository.update(uuid, {imageUrl:image.link});
     await imgurService.deleteFromImgur(image.deleteHash);
     await fbImageRepository.delete(uuid);
-    console.log("finish");
 }

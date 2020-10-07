@@ -1,5 +1,4 @@
 import {Action, Dispatch} from "redux";
-import { EventType } from "react-notifications";
 
 export type Notification = {
     message:string
