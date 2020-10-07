@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production')
 // @ts-ignore
 const env = {
     app: {
-        port: process.env.APP_PORT,
+        port: process.env.PORT,
         corsWhitelist: process.env.APP_CORS_WHITELIST
     },
     jwt: {
